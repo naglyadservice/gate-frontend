@@ -9,7 +9,7 @@ function Drawer() {
   return (
     <div className={cn(
       'fixed top-0 right-0 z-10 min-h-full bg-white sm:hidden transition',
-      (isDrawer ? "translate-x-full" : "translate-x-0")
+      (isDrawer ? "translate-x-0" : "translate-x-full")
     )}>
       <div className="flex flex-col gap-10 min-h-full px-4 py-6">
         <img

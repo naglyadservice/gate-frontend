@@ -10,6 +10,4 @@ const useDrawer = create<IDrawer>((set) => ({
   toggleDrawer: () => set((state) => ({ isDrawer: !state.isDrawer }))
 }))
 
-
-
 export { useDrawer }

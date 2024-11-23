@@ -1,6 +1,6 @@
 import logo from "../assets/logo.svg";
 import burgerSrc from "../assets/burger.svg";
-import { useDrawer } from "../state/zustand";
+import { useDrawer } from "../state/drawer";
 import { navLinks } from "../state/navLinks";
 
 
@@ -40,14 +40,16 @@ function Header() {
           onClick={() => toggleDrawer()}
         />
 
-        {/* <a
-          href=""
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:opacity-70"
-        >
-          <img src={personalArea} alt="" />
-        </a> */}
+        {/* 
+          <a
+            href=""
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:opacity-70"
+          >
+            <img src={personalArea} alt="" />
+          </a> 
+        */}
       </div>
     </div>
   )

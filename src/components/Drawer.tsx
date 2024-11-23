@@ -1,6 +1,6 @@
 import cn from "classnames";
 import burgerSrc from "../assets/burger.svg";
-import { useDrawer } from '../state/zustand';
+import { useDrawer } from '../state/drawer';
 import { navLinks } from "../state/navLinks";
 
 function Drawer() {

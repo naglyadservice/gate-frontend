@@ -1,5 +1,6 @@
-import axios from "axios";
 import { create } from "zustand";
+import apiClient from "./client";
+
 
 interface IAuth {
   user_id: string;
@@ -30,7 +31,7 @@ const useAuth = create<IAuth & IAuthFetching>((set) => ({
   getAuthMe: async () => {
     try {
       set({ isAuthLoading: true, isAuthError: false });
-      const { data } = await axios.get<IAuth>(`https://gate.iotapps.net/api/me`);
+      const { data } = await apiClient.get<IAuth>(`/me`);
 
       set(data);
       console.log(data);
@@ -43,8 +44,9 @@ const useAuth = create<IAuth & IAuthFetching>((set) => ({
 
   getGoogleLoginUrl: async () => {
     try {
-      const { data } = await axios.get(`https://gate.iotapps.net/api/login/google`);
+      const { data } = await apiClient.get(`/login/google`);
 
+      console.log(data);
       set({ authGoogleRedirectUrl: data.auth_url });
     } catch (error) {
       console.warn({ error })

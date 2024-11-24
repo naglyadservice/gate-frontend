@@ -1,6 +1,6 @@
-import axios from "axios";
 import toast from "react-hot-toast";
 import { create } from "zustand";
+import apiClient from "./client";
 
 interface IGate {
   id: string;
@@ -26,12 +26,11 @@ const useGates = create<IGates & IGatesFetching>((set) => ({
   isGatesLoading: true,
   isGatesError: false,
 
-  getAllGates: async (user_id: string) => {
+  getAllGates: async () => {
     try {
       set({ isGatesLoading: true, isGatesError: false });
 
-      const { data } = await axios.get<IGates['gates']>(`https://gate.iotapps.net/api/users/${user_id}/accesspoints`);
-      // const { data } = await axios.get<IGates['gates']>(`https://666458a8932baf9032aac87b.mockapi.io/gates`);
+      const { data } = await apiClient.get<IGates['gates']>(`/me/accesspoints`);
 
       set({ gates: data });
     } catch (error) {
@@ -42,9 +41,9 @@ const useGates = create<IGates & IGatesFetching>((set) => ({
     }
   },
 
-  openGateById: async (user_id, accesspoint_id) => {
+  openGateById: async (accesspoint_id) => {
     try {
-      await axios.get(`https://gate.iotapps.net/api/api/users/${user_id}/accesspoints/${accesspoint_id}/activate`)
+      await apiClient.get(`/me/accesspoints/${accesspoint_id}/activate`)
 
       toast.success("Gate is opened");
     } catch (error) {

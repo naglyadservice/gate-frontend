@@ -1,3 +1,4 @@
+// import axios from 'axios';
 import toast from "react-hot-toast";
 import { create } from "zustand";
 import apiClient from "./client";
@@ -31,6 +32,8 @@ const useGates = create<IGates & IGatesFetching>((set) => ({
       set({ isGatesLoading: true, isGatesError: false });
 
       const { data } = await apiClient.get<IGates['gates']>(`/me/accesspoints`);
+
+      // const { data } = await axios.get<IGates['gates']>(`https://666458a8932baf9032aac87b.mockapi.io/gates`);
 
       set({ gates: data });
     } catch (error) {

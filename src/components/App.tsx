@@ -9,6 +9,7 @@ import Drawer from "./Drawer";
 import Error from "./Error";
 import Spinner from "./Spinner";
 import { useAuth } from "../state/auth";
+import LogInWithGoole from "./LogInWithGoole";
 
 function App() {
   const { user_id } = useAuth();
@@ -23,7 +24,7 @@ function App() {
 
   if (!authGoogleRedirectUrl) return (<Spinner />);
 
-  if (!user_id) window.location.assign(authGoogleRedirectUrl);
+  if (!user_id) return (<LogInWithGoole />);
 
   if (isAuthError) return (<Error />);
 

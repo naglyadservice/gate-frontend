@@ -44,7 +44,7 @@ const useAuth = create<IAuth & IAuthFetching>((set) => ({
 
   getGoogleLoginUrl: async () => {
     try {
-      const { data } = await apiClient.get(`auth/google/login`);
+      const { data } = await apiClient.get(`/login/google`);
 
       set({ authGoogleRedirectUrl: data.auth_url });
     } catch (error) {

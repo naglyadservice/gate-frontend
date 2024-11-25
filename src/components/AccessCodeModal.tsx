@@ -88,8 +88,7 @@ const AccessCodeModal: React.FC<AccessCodeModalProps> = ({ isOpen, onClose }) =>
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-xl w-full max-w-md p-6 relative">
-        {/* Close button */}
-        <button 
+        <button
           onClick={handleClose}
           className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 transition-colors"
         >
@@ -102,7 +101,7 @@ const AccessCodeModal: React.FC<AccessCodeModalProps> = ({ isOpen, onClose }) =>
               <h2 className="text-xl font-semibold mb-6 pr-8">
                 Введіть код доступу до локації
               </h2>
-              
+
               <div className="mb-6">
                 <input
                   type="text"
@@ -113,8 +112,8 @@ const AccessCodeModal: React.FC<AccessCodeModalProps> = ({ isOpen, onClose }) =>
                   autoFocus
                 />
               </div>
-              
-              <button 
+
+              <button
                 type="submit"
                 className="w-full bg-gradient-to-r from-[#58a0ff] to-[#5966ff] hover:bg-gradient-to-l text-white font-semibold py-3 px-4 rounded-lg transition-all"
               >

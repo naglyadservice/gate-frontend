@@ -27,11 +27,11 @@ const useGates = create<IGates & IGatesFetching>((set) => ({
   isGatesLoading: true,
   isGatesError: false,
 
-  getAllGates: async () => {
+  getAllGates: async (user_id) => {
     try {
       set({ isGatesLoading: true, isGatesError: false });
 
-      const { data } = await apiClient.get<IGates['gates']>(`/me/accesspoints`);
+      const { data } = await apiClient.get<IGates['gates']>(`/users/${user_id}/accesspoints`);
 
       // const { data } = await axios.get<IGates['gates']>(`https://666458a8932baf9032aac87b.mockapi.io/gates`);
 
@@ -44,9 +44,9 @@ const useGates = create<IGates & IGatesFetching>((set) => ({
     }
   },
 
-  openGateById: async (accesspoint_id) => {
+  openGateById: async (user_id, accesspoint_id) => {
     try {
-      await apiClient.get(`/me/accesspoints/${accesspoint_id}/activate`)
+      await apiClient.get(`/users/${user_id}/accesspoints/${accesspoint_id}/activate`)
 
       toast.success("Gate is opened");
     } catch (error) {

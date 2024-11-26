@@ -57,7 +57,7 @@ const useAuth = create<IAuth & IAuthFetching>((set) => ({
 
   logout: async () => {
     try {
-      const { data } = await apiClient.post("/auth/logout");
+      await apiClient.post("/auth/logout");
 
       set({
         user_id: "",

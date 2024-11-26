@@ -1,5 +1,6 @@
 import React from "react";
 import { Toaster } from "react-hot-toast";
+import { ErrorBoundary } from "react-error-boundary";
 
 import Layout from "./Layout";
 import Header from "./Header";
@@ -8,8 +9,9 @@ import GateList from "./GateList";
 import Drawer from "./Drawer";
 import Error from "./Error";
 import Spinner from "./Spinner";
-import { useAuth } from "../state/auth";
 import LogInWithGoole from "./LogInWithGoole";
+
+import { useAuth } from "../state/auth";
 
 function App() {
   const { user_id } = useAuth();
@@ -29,14 +31,16 @@ function App() {
   if (isAuthError) return (<Error />);
 
   return (
-    <Layout>
-      <Header />
-      <Add />
-      <GateList />
-      <Drawer />
+    <ErrorBoundary FallbackComponent={Error}>
+      <Layout>
+        <Header />
+        <Add />
+        <GateList />
+        <Drawer />
 
-      <Toaster position="bottom-right" />
-    </Layout>
+        <Toaster position="bottom-right" />
+      </Layout>
+    </ErrorBoundary>
   )
 }
 

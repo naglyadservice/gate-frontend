@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import apiClient from "./client";
+import toast from "react-hot-toast";
 
 
 interface IAuth {
@@ -16,6 +17,7 @@ interface IAuthFetching {
 
   getAuthMe: () => void;
   getGoogleLoginUrl: () => void;
+  logout: () => void;
 }
 
 const useAuth = create<IAuth & IAuthFetching>((set) => ({
@@ -48,7 +50,23 @@ const useAuth = create<IAuth & IAuthFetching>((set) => ({
 
       set({ authGoogleRedirectUrl: data.auth_url });
     } catch (error) {
-      console.warn({ error })
+      toast.error("Error...");
+      console.warn({ error });
+    }
+  },
+
+  logout: async () => {
+    try {
+      const { data } = await apiClient.post("/auth/logout");
+
+      set({
+        user_id: "",
+        email: "",
+        name: ""
+      });
+    } catch (error) {
+      toast.error("Error...");
+      console.warn({ error });
     }
   }
 }))

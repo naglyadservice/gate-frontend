@@ -47,7 +47,7 @@ const useGates = create<IGates & IGatesFetching>((set) => ({
 
   openGateById: async (accesspoint_id) => {
     try {
-      await apiClient.get(`/me/accesspoints/${accesspoint_id}/activate`)
+      await apiClient.post(`/me/accesspoints/${accesspoint_id}/activate`)
 
       toast.success("Gate is opened");
     } catch (error) {

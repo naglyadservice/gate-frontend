@@ -10,7 +10,7 @@ function GateList() {
   React.useEffect(() => {
     if (!user_id) return;
 
-    getAllGates(user_id);
+    getAllGates();
   }, [user_id])
 
   if (!gates.length) return null;

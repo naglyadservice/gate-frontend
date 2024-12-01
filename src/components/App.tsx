@@ -23,8 +23,6 @@ function App() {
     getGoogleLoginUrl();
   }, []);
 
-  console.log({ isAuthLoading })
-
   if (isAuthLoading) return (<Spinner />);
 
   if (!authGoogleRedirectUrl) return (<Spinner />);

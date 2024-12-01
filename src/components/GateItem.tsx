@@ -1,6 +1,5 @@
 import React from "react";
 import { useGates } from "../state/gates";
-import { useAuth } from "../state/auth";
 import src from "../assets/gate.svg";
 import Button from './Button';
 import { Loader } from "lucide-react";
@@ -15,17 +14,16 @@ interface IProps {
 
 
 function GateItem({ gateFor, address, id }: IProps) {
-  const user_id = useAuth(selector => selector.user_id);
   const { openGateById } = useGates();
   const [isLoader, setIsLoader] = React.useState(false);
 
   const onOpenClick = () => {
-    openGateById(user_id, id)
+    setIsLoader(true);
+
+    openGateById(id)
       .finally(() => {
         setIsLoader(false)
       });
-
-    setIsLoader(true);
   }
 
   return (

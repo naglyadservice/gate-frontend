@@ -10,14 +10,14 @@ interface IGate {
 interface IGates {
   gates: IGate[];
 
-  openGateById: (user_id: string, accesspoint_id: string) => Promise<void>;
+  openGateById: (accesspoint_id: string) => Promise<void>;
 }
 
 interface IGatesFetching {
   isGatesLoading: boolean;
   isGatesError: boolean;
 
-  getAllGates: (user_id: string) => void;
+  getAllGates: () => Promise<void>;
 }
 
 
@@ -28,11 +28,11 @@ const useGates = create<IGates & IGatesFetching>((set) => ({
   isGatesLoading: true,
   isGatesError: false,
 
-  getAllGates: async (user_id) => {
+  getAllGates: async () => {
     try {
       set({ isGatesLoading: true, isGatesError: false });
 
-      const { data } = await apiClient.get<IGates['gates']>(`/users/${user_id}/accesspoints`);
+      const { data } = await apiClient.get<IGates['gates']>(`/me/accesspoints`);
 
       // const { data } = await axios.get<IGates['gates']>(`https://666458a8932baf9032aac87b.mockapi.io/gates`);
 
@@ -45,9 +45,9 @@ const useGates = create<IGates & IGatesFetching>((set) => ({
     }
   },
 
-  openGateById: async (user_id, accesspoint_id) => {
+  openGateById: async (accesspoint_id) => {
     try {
-      await apiClient.get(`/users/${user_id}/accesspoints/${accesspoint_id}/activate`)
+      await apiClient.get(`/me/accesspoints/${accesspoint_id}/activate`)
 
       toast.success("Gate is opened");
     } catch (error) {

@@ -7,6 +7,7 @@ interface IAuth {
   user_id: string;
   email: string;
   name: string;
+  picture_url: string;
 }
 
 interface IAuthFetching {
@@ -22,8 +23,9 @@ interface IAuthFetching {
 
 const useAuth = create<IAuth & IAuthFetching>((set) => ({
   user_id: "",
-  email: "",
   name: "",
+  email: "",
+  picture_url: "",
 
   isAuthLoading: true,
   isAuthError: false,
@@ -62,7 +64,8 @@ const useAuth = create<IAuth & IAuthFetching>((set) => ({
       set({
         user_id: "",
         email: "",
-        name: ""
+        name: "",
+        picture_url: "",
       });
     } catch (error) {
       toast.error("Error...");

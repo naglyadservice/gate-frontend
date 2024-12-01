@@ -114,7 +114,7 @@ const AccessCodeModal: React.FC<AccessCodeModalProps> = ({ isOpen, onClose }) =>
               </div>
 
               <button
-                type="submit"
+                colorScheme="submit"
                 className="w-full bg-gradient-to-r from-[#58a0ff] to-[#5966ff] hover:bg-gradient-to-l text-white font-semibold py-3 px-4 rounded-lg transition-all"
               >
                 Підтвердити

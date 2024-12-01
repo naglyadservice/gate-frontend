@@ -1,4 +1,3 @@
-// import axios from 'axios';
 import toast from "react-hot-toast";
 import { create } from "zustand";
 import apiClient from "./client";
@@ -20,6 +19,8 @@ interface IGatesFetching {
 
   getAllGates: (user_id: string) => void;
 }
+
+
 
 const useGates = create<IGates & IGatesFetching>((set) => ({
   gates: [],

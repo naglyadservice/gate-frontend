@@ -1,7 +1,9 @@
+import React from "react";
 import { useGates } from "../state/gates";
 import { useAuth } from "../state/auth";
 import src from "../assets/gate.svg";
 import Button from './Button';
+import { Loader } from "lucide-react";
 
 interface IProps {
   key?: number | string;
@@ -10,12 +12,21 @@ interface IProps {
   id: string;
 }
 
+
+
 function GateItem({ gateFor, address, id }: IProps) {
   const user_id = useAuth(selector => selector.user_id);
   const { openGateById } = useGates();
+  const [isLoader, setIsLoader] = React.useState(false);
 
   const onOpenClick = () => {
-    openGateById(user_id, id)
+    openGateById(user_id, id);
+
+    setIsLoader(true);
+
+    setTimeout(() => {
+      setIsLoader(false)
+    }, 3000)
   }
 
   return (
@@ -31,7 +42,11 @@ function GateItem({ gateFor, address, id }: IProps) {
         <span className='font-semibold'>{address}</span>
       </div>
 
-      <Button type='filled' className='ml-auto' onClick={onOpenClick}>Відкрити</Button>
+      <Button myColorScheme='filled' className='ml-auto relative' onClick={onOpenClick} disabled={isLoader}>
+        {isLoader && (<Loader className="animate-spin absolute" />)}
+
+        <span className={(isLoader ? "opacity-0" : "")}>Відкрити</span>
+      </Button>
     </li>
   )
 }

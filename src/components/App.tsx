@@ -6,12 +6,13 @@ import Layout from "./Layout";
 import Header from "./Header";
 import Add from "./Add";
 import GateList from "./GateList";
-import Drawer from "./Drawer";
 import Error from "./Error";
 import Spinner from "./Spinner";
 import LogInWithGoole from "./LogInWithGoole";
 
 import { useAuth } from "../state/auth";
+
+
 
 function App() {
   const { user_id } = useAuth();
@@ -36,7 +37,6 @@ function App() {
         <Header />
         <Add />
         <GateList />
-        <Drawer />
 
         <Toaster position="bottom-right" />
       </Layout>

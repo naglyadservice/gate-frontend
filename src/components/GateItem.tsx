@@ -20,13 +20,12 @@ function GateItem({ gateFor, address, id }: IProps) {
   const [isLoader, setIsLoader] = React.useState(false);
 
   const onOpenClick = () => {
-    openGateById(user_id, id);
+    openGateById(user_id, id)
+      .finally(() => {
+        setIsLoader(false)
+      });
 
     setIsLoader(true);
-
-    setTimeout(() => {
-      setIsLoader(false)
-    }, 3000)
   }
 
   return (

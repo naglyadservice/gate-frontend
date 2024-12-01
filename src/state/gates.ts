@@ -10,7 +10,7 @@ interface IGate {
 interface IGates {
   gates: IGate[];
 
-  openGateById: (user_id: string, accesspoint_id: string) => void;
+  openGateById: (user_id: string, accesspoint_id: string) => Promise<void>;
 }
 
 interface IGatesFetching {

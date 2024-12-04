@@ -1,8 +1,9 @@
 import React from "react";
-import { useGates } from "../state/gates";
+import { CircleCheck, CircleX, Loader } from "lucide-react";
+
 import src from "../assets/gate.svg";
 import Button from './Button';
-import { Loader } from "lucide-react";
+import { useGates } from "../state/gates";
 
 interface IProps {
   key?: number | string;
@@ -11,19 +12,21 @@ interface IProps {
   id: string;
 }
 
+type statuses = "loading" | "error" | "success" | "ready";
+
 
 
 function GateItem({ gateFor, address, id }: IProps) {
   const { openGateById } = useGates();
-  const [isLoader, setIsLoader] = React.useState(false);
+  const [status, setStatus] = React.useState<statuses>("ready");
 
   const onOpenClick = () => {
-    setIsLoader(true);
+    setStatus("loading");
 
     openGateById(id)
-      .finally(() => {
-        setIsLoader(false)
-      });
+      .then(() => setStatus("success"))
+      .catch(() => setStatus("error"))
+      .finally(() => setTimeout(() => setStatus("ready"), 5000));
   }
 
   return (
@@ -39,10 +42,17 @@ function GateItem({ gateFor, address, id }: IProps) {
         <span className='font-semibold'>{address}</span>
       </div>
 
-      <Button myColorScheme='filled' className='ml-auto relative' onClick={onOpenClick} disabled={isLoader}>
-        {isLoader && (<Loader className="animate-spin absolute" />)}
+      <Button
+        myColorScheme='filled'
+        className='ml-auto relative'
+        onClick={onOpenClick}
+        disabled={status === "loading"}
+      >
+        <span className={((status === "ready") ? "" : "opacity-0")}>Відкрити</span>
 
-        <span className={(isLoader ? "opacity-0" : "")}>Відкрити</span>
+        {(status === "loading") && (<Loader className="animate-spin absolute" />)}
+        {(status === "success") && (<CircleCheck className="absolute" />)}
+        {(status === "error") && (<CircleX className="absolute" />)}
       </Button>
     </li>
   )

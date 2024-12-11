@@ -11,16 +11,21 @@ import Spinner from "./Spinner";
 import LogInWithGoole from "./LogInWithGoole";
 
 import { useAuth } from "../state/auth";
+import useInvokePWA from "./InvokePWA.hook";
 
 
 
 function App() {
   const { user_id } = useAuth();
   const { isAuthLoading, isAuthError, getAuthMe, authGoogleRedirectUrl, getGoogleLoginUrl } = useAuth();
+  const invokePWA = useInvokePWA();
 
   React.useEffect(() => {
     getAuthMe();
     getGoogleLoginUrl();
+
+    const timer = setTimeout(() => invokePWA(), 3000);
+    return () => clearTimeout(timer);
   }, []);
 
   if (isAuthLoading) return (<Spinner />);

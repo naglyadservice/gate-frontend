@@ -15,6 +15,7 @@ function useInvokePWA() {
   React.useEffect(() => {
     const handleBeforeInstallPrompt = (e: Event) => {
       setDeferredPrompt(e as BeforeInstallPromptEvent);
+
       e.preventDefault();
     };
 
@@ -50,7 +51,7 @@ function useInvokePWA() {
 
 
 
-  return triggerInstall;
+  return { deferredPrompt, triggerInstall };
 }
 
 export default useInvokePWA

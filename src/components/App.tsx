@@ -18,15 +18,17 @@ import useInvokePWA from "./InvokePWA.hook";
 function App() {
   const { user_id } = useAuth();
   const { isAuthLoading, isAuthError, getAuthMe, authGoogleRedirectUrl, getGoogleLoginUrl } = useAuth();
-  const invokePWA = useInvokePWA();
+  const { triggerInstall, deferredPrompt } = useInvokePWA();
 
   React.useEffect(() => {
     getAuthMe();
     getGoogleLoginUrl();
-
-    const timer = setTimeout(() => invokePWA(), 3000);
-    return () => clearTimeout(timer);
   }, []);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => triggerInstall(), 3000);
+    return () => clearTimeout(timer);
+  }, [deferredPrompt])
 
   if (isAuthLoading) return (<Spinner />);
 

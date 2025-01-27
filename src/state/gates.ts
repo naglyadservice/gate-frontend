@@ -34,7 +34,7 @@ const useGates = create<IGates & IGatesFetching>((set) => ({
 
       const { data } = await apiClient.get<IGates['gates']>(`/me/accesspoints`);
 
-      // const { data } = await axios.get<IGates['gates']>(`https://666458a8932baf9032aac87b.mockapi.io/gates`);
+      // const { data } = await apiClient.get<IGates['gates']>(`https://666458a8932baf9032aac87b.mockapi.io/gates`);
 
       set({ gates: data });
     } catch (error) {

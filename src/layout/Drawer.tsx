@@ -1,7 +1,11 @@
 import cn from "classnames";
 import burgerSrc from "../assets/burger.svg";
 import { useDrawer } from '../state/drawer';
-import { navLinks } from "../state/navLinks";
+
+
+const navLinks = [
+  { link: "/", text: "text" }
+]
 
 function Drawer() {
   const { isDrawer, toggleDrawer } = useDrawer();

@@ -22,7 +22,7 @@ function AccountUsers() {
       }).catch(() => {
         toast.error("Помилка під час запиту");
       })
-  }, [])
+  }, [selectedLocation])
 
   return (
     <div >

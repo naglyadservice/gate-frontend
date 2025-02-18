@@ -8,10 +8,10 @@ import { useAccountTab } from '../state/account.tabs';
 
 
 function AccountSettingsCreateLocation() {
+  const setTabs = useAccountTab(selector => selector.setTab);
   const [name, setName] = React.useState('');
   const [address, setAddress] = React.useState('');
   const [access_code, setCode] = React.useState('');
-  const { setTab } = useAccountTab();
 
   const onSaveButtonClick = () => {
     if (!name.trim() || !address.trim() || !access_code.trim()) return toast.error('Не всі поля заповнені');
@@ -21,7 +21,7 @@ function AccountSettingsCreateLocation() {
       accesspoint_ids: []
     }).then(res => {
       if (res.status === 200) {
-        setTab("settings/location");
+        setTabs("settings/location");
         return toast.success("Запит відправлено");
       }
       toast.error("Помилка під час відправлення");

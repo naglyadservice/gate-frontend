@@ -17,9 +17,6 @@ function AccountSettingsEditLocation() {
   const [name, setName] = React.useState(currentLocation?.name || '');
   const [address, setAddress] = React.useState(currentLocation?.address || '');
   const [access_code, setCode] = React.useState(currentLocation?.access_code || '');
-  const { setTab } = useAccountTab();
-
-  console.log(currentLocation)
 
   const onSaveButtonClick = () => {
     apiClient.patch(`/users/me/locations/${currentLocation.id}`, {
@@ -29,7 +26,7 @@ function AccountSettingsEditLocation() {
       access_code: access_code
     }).then((res) => {
       if (res.status != 204) return toast.error("Помилка під час відправлення");
-      setTab("settings");
+      setTabs("settings");
       toast.success('Зміни збережено');
     }).catch(() => { toast.error("Помилка під час відправлення") })
   }

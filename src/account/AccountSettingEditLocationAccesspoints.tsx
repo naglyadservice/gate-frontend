@@ -9,10 +9,10 @@ import { useAccountSettings } from '../state/acoount.settings';
 
 
 function AccountSettingsEditLocationAccesspoints() {
-  const { currentLocation } = useAccountSettings();
+  const setTabs = useAccountTab(selector => selector.setTab);
+  const currentLocation = useAccountSettings(selector => selector.currentLocation);
   const [selectedIds, setSelectedIds] = React.useState<string[]>(currentLocation.accesspoints?.map(item => item.id) || []);
   const [myGates, setMyGates] = React.useState<IMyAccesspoints[]>([]);
-  const { setTab } = useAccountTab()
 
   React.useEffect(() => {
     apiClient.get(`/users/me/accesspoints/owned`)
@@ -32,7 +32,7 @@ function AccountSettingsEditLocationAccesspoints() {
       accesspoint_ids: selectedIds,
     }).then((res) => {
       if (res.status != 204) return toast.error("Помилка під час відправлення");
-      setTab("settings");
+      setTabs("settings");
       toast.success('Зміни збережено');
     }).catch(() => { toast.error("Помилка під час відправлення") })
   }

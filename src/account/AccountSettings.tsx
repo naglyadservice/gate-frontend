@@ -7,7 +7,7 @@ import MyAccesspointsList from './AccountMyAccesspoints';
 
 
 function AccountSettings() {
-  const setTab = useAccountTab(selector => selector.setTab)
+  const setTabs = useAccountTab(selector => selector.setTab);
 
   return (
     <div>
@@ -18,7 +18,7 @@ function AccountSettings() {
         <div className='flex flex-col gap-3'>
           <span className='text-base font-bold'>Мої локації</span>
           <LocationList />
-          <Button myColorScheme="outlined" onClick={() => setTab("settings/location/create")}>
+          <Button myColorScheme="outlined" onClick={() => setTabs("settings/location/create")}>
             <span>Додати локацію</span>
           </Button>
         </div>

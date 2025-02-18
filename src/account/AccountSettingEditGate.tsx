@@ -4,10 +4,12 @@ import Button from '../components/Button'
 import { useAccountSettings } from '../state/acoount.settings';
 import toast from 'react-hot-toast';
 import apiClient from '../utils/client';
+import { useAccountTab } from '../state/account.tabs';
 
 
 
 function AccountSettingsEditGate() {
+  const setTabs = useAccountTab(selector => selector.setTab);
   const currentGate = useAccountSettings(selector => selector.currentGate);
   const [name, setName] = React.useState(currentGate?.gateFor || '');
   const [address, setAddress] = React.useState(currentGate?.address || '');
@@ -19,9 +21,9 @@ function AccountSettingsEditGate() {
         label: name,
         rtsp_url: "rtsp_url"
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         toast.success('Зміни збережено');
+        setTabs("settings");
       }).catch(() => {
         toast.error("Помилка під час запиту");
       })

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, CheckCircle, AlertCircle, Loader } from 'lucide-react';
-import apiClient from '../state/client';
+import apiClient from '../utils/client';
 
 interface AccessCodeModalProps {
   isOpen: boolean;
@@ -57,7 +57,7 @@ const AccessCodeModal: React.FC<AccessCodeModalProps> = ({ isOpen, onClose }) =>
 
     setModalState('loading');
     try {
-      await apiClient.post(`/locations/create-request`, null, {
+      await apiClient.post(`/locations/requests`, null, {
         params: { access_code: accessCode }
       });
       setModalState('success');

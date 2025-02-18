@@ -6,13 +6,15 @@ import { useDrawer } from "../state/drawer";
 import logo from "../assets/logo.svg";
 import personalArea from "../assets/personal-area.svg";
 import { tabsType, useAccountTab } from "../state/account.tabs";
+import { useNavigate } from "react-router";
 
 
 
 function Header() {
   const { isDrawer, toggleDrawer } = useDrawer();
-  const { name, email, picture_url, logout } = useAuth();
+  const { name, email, image_url, logout } = useAuth();
   const setAccountTab = useAccountTab(selector => selector.setTab);
+  const navigate = useNavigate();
 
   const onButtonTabClick = (tab: tabsType) => {
     setAccountTab(tab);
@@ -34,7 +36,7 @@ function Header() {
         <div>
           <img
             className="w-10 h-10 rounded-full object-cover object-center cursor-pointer"
-            src={picture_url}
+            src={image_url}
             alt=""
             onClick={toggleDrawer}
 
@@ -47,12 +49,8 @@ function Header() {
             <div className="p-3 bg-white rounded-md border">
               <div className="flex flex-col gap-3">
                 <div className="flex flex-col">
-
-                  {/* <span>{name}</span>
-                  <span className="text-black/50">{email}</span> */}
-
-                  <span>Геннадий Гисевич</span>
-                  <span className="text-black/50">temp.disposable123@gmail.com</span>
+                  <span>{name}</span>
+                  <span className="text-black/50">{email}</span>
                 </div>
                 <hr />
                 <button className="flex items-center w-full gap-2 hover:opacity-70" onClick={() => onButtonTabClick("requests")}>

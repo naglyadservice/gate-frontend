@@ -1,9 +1,14 @@
-import GateList from '../gate/GateList'
-import LocationList from '../gate/LocationList'
+import Button from '../components/Button';
+import LocationList from '../locations/LocationList';
+
+import { useAccountTab } from '../state/account.tabs';
+import MyAccesspointsList from './AccountMyAccesspoints';
 
 
 
 function AccountSettings() {
+  const setTab = useAccountTab(selector => selector.setTab)
+
   return (
     <div>
       <div className='flex flex-col gap-4'>
@@ -13,10 +18,13 @@ function AccountSettings() {
         <div className='flex flex-col gap-3'>
           <span className='text-base font-bold'>Мої локації</span>
           <LocationList />
+          <Button myColorScheme="outlined" onClick={() => setTab("settings/location/create")}>
+            <span>Додати локацію</span>
+          </Button>
         </div>
         <div className='flex flex-col gap-3'>
           <span className='text-base font-bold'>Мої точки доступу</span>
-          <GateList />
+          <MyAccesspointsList />
         </div>
       </div>
     </div>

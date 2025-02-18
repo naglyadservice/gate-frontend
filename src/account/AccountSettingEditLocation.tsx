@@ -1,10 +1,13 @@
 import React from 'react'
+import toast from 'react-hot-toast';
+import { Copy, MapPin } from 'lucide-react';
+
 import MyInput from '../components/MyInput'
 import Button from '../components/Button'
-import { useAccountSettings } from '../state/acoount.settings';
-import { Copy, MapPin, Pencil } from 'lucide-react';
-import toast from 'react-hot-toast';
+
 import { useAccountTab } from '../state/account.tabs';
+import { useAccountSettings } from '../state/acoount.settings';
+import apiClient from '../utils/client';
 
 
 
@@ -12,17 +15,27 @@ function AccountSettingsEditLocation() {
   const setTabs = useAccountTab(selector => selector.setTab);
   const currentLocation = useAccountSettings(selector => selector.currentLocation);
   const [name, setName] = React.useState(currentLocation?.name || '');
-  const [city, setCity] = React.useState(currentLocation?.city || '');
   const [address, setAddress] = React.useState(currentLocation?.address || '');
-  const [cameraUrl, setCameraUrl] = React.useState(currentLocation?.cameraUrl || '');
-  const [code, setCode] = React.useState(currentLocation?.code || '');
+  const [access_code, setCode] = React.useState(currentLocation?.access_code || '');
+  const { setTab } = useAccountTab();
+
+  console.log(currentLocation)
 
   const onSaveButtonClick = () => {
-    toast.success('Зміни збережено');
+    apiClient.patch(`/users/me/locations/${currentLocation.id}`, {
+      ...currentLocation,
+      name: name,
+      address: address,
+      access_code: access_code
+    }).then((res) => {
+      if (res.status != 204) return toast.error("Помилка під час відправлення");
+      setTab("settings");
+      toast.success('Зміни збережено');
+    }).catch(err => { toast.error("Помилка під час відправлення") })
   }
 
   const onCopyButtonClick = () => {
-    window.navigator.clipboard.writeText(code);
+    window.navigator.clipboard.writeText(access_code);
     toast.success('Код доступу скопійовано в буфер обміну');
   }
 
@@ -44,21 +57,13 @@ function AccountSettingsEditLocation() {
             <MyInput value={name} onChange={(e) => setName(e.target.value)} />
           </div>
           <div className='flex flex-col gap-2'>
-            <span className='text-sm'>Місто</span>
-            <MyInput value={city} onChange={(e) => setCity(e.target.value)} />
-          </div>
-          <div className='flex flex-col gap-2'>
             <span className='text-sm'>Адреса</span>
             <MyInput value={address} onChange={(e) => setAddress(e.target.value)} />
           </div>
           <div className='flex flex-col gap-2'>
-            <span className='text-sm'>URL камери</span>
-            <MyInput value={cameraUrl} onChange={(e) => setCameraUrl(e.target.value)} />
-          </div>
-          <div className='flex flex-col gap-2'>
             <span className='text-sm'>Код доступу</span>
             <div className='relative'>
-              <MyInput value={code} onChange={(e) => setCode(e.target.value)} />
+              <MyInput value={access_code} onChange={(e) => setCode(e.target.value)} />
               <Copy size={18} onClick={onCopyButtonClick} className='absolute top-[50%] right-3 -translate-y-[50%] hover:opacity-60 cursor-pointer' />
             </div>
           </div>
@@ -73,8 +78,16 @@ function AccountSettingsEditLocation() {
         </div>
 
         <ul className="flex flex-col px-2 py-1 bg-white rounded-lg divide-y divide-[#E5E5E5] text-sm">
-          <li className='px-1 py-3'>вул. Симона Петлюри 32, м. Київ</li>
-          <li className='px-1 py-3'>вул. Симона Петлюри 32, м. Київ</li>
+          {currentLocation.accesspoints?.length === 0 && <span className='px-1 py-3'>Відсутні прив’язані точки доступу</span>}
+
+          {currentLocation.accesspoints &&
+            currentLocation.accesspoints?.length > 0 &&
+            currentLocation.accesspoints.map(el => (
+              <li
+                key={el.id}
+                className='px-1 py-3'
+              >{el.address}</li>
+            ))}
         </ul>
 
         <div className='flex justify-center'>

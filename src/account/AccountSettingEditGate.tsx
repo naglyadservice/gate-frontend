@@ -3,6 +3,7 @@ import MyInput from '../components/MyInput'
 import Button from '../components/Button'
 import { useAccountSettings } from '../state/acoount.settings';
 import toast from 'react-hot-toast';
+import apiClient from '../utils/client';
 
 
 
@@ -12,7 +13,18 @@ function AccountSettingsEditGate() {
   const [address, setAddress] = React.useState(currentGate?.address || '');
 
   const onSaveButtonClick = () => {
-    toast.success('Зміни збережено');
+    apiClient.patch(`/users/me/accesspoints/owned/${currentGate.id}`,
+      {
+        address,
+        label: name,
+        rtsp_url: "rtsp_url"
+      })
+      .then((res) => {
+        console.log(res)
+        toast.success('Зміни збережено');
+      }).catch(() => {
+        toast.error("Помилка під час запиту");
+      })
   }
 
   return (

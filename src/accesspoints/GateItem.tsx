@@ -3,9 +3,11 @@ import { CircleCheck, CircleX, Loader, Pencil } from "lucide-react";
 
 import src from "../assets/gate.svg";
 import Button from '../components/Button';
-import { useGates } from "../state/gates";
+import { useGates } from "../state/accesspoints";
 import { useAccountSettings } from "../state/acoount.settings";
 import { useAccountTab } from "../state/account.tabs";
+import apiClient from "../utils/client";
+import toast from "react-hot-toast";
 
 interface IProps {
   key?: number | string;

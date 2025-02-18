@@ -4,14 +4,42 @@ import { ChevronDown } from 'lucide-react';
 
 import src from "../assets/personal-area.svg";
 import Button from '../components/Button';
+import apiClient from '../utils/client';
+import toast from 'react-hot-toast';
+import { useLocation } from '../state/locations';
 
 
 
-function AccountRequestItem() {
+function AccountRequestItem(props: Partial<IUser>) {
   const [isOpened, setIsOpened] = React.useState(false);
+  const selectedLocation = useLocation(selector => selector.selectedLocation);
 
   const onTitleClick = () => {
     setIsOpened(prev => !prev)
+  }
+
+  const onAcceptClick = () => {
+    if (!selectedLocation?.id) return console.log("no location's id");
+    if (!props?.id) return console.log("no request's id");
+
+    apiClient.get(`/users/me/locations/${selectedLocation?.id}/requests/${props.id}/accept`)
+      .then((res) => {
+        console.log(res)
+      }).catch(() => {
+        toast.error("Помилка під час запиту");
+      })
+  }
+
+  const onDeclineClick = () => {
+    if (!selectedLocation?.id) return console.log("no location's id");
+    if (!props?.id) return console.log("no request's id");
+
+    apiClient.get(`/users/me/locations/${selectedLocation?.id}/requests/${props.id}/reject`)
+      .then((res) => {
+        console.log(res)
+      }).catch(() => {
+        toast.error("Помилка під час запиту");
+      })
   }
 
   return (
@@ -20,8 +48,8 @@ function AccountRequestItem() {
         <div className="flex items-center gap-2 cursor-pointer" onClick={onTitleClick}>
           <img src="" alt="" className='w-10 h-10 rounded-full' onError={(e) => e.currentTarget.src = src} />
           <div className="flex flex-col gap-2 text-sm leading-none">
-            <span className='font-semibold'>Дмитро Федотов</span>
-            <span className='text-black/50'>dmytro.fedotov@gmail.com</span>
+            <span className='font-semibold'>{props.name}</span>
+            <span className='text-black/50'>{props.email}</span>
           </div>
           <ChevronDown size={18} className={cn('ml-auto', (isOpened && "rotate-180"))} />
         </div>
@@ -30,19 +58,19 @@ function AccountRequestItem() {
           <div className="flex gap-6 text-sm leading-none">
             <div className="flex flex-col gap-3 flex-1">
               <span>Номери машин</span>
-              <span className='font-semibold'>AE4675F</span>
-              <span className='font-semibold'>AE7843D</span>
+              <span className='font-semibold'>{props.auto_1}</span>
+              <span className='font-semibold'>{props.auto_2}</span>
             </div>
             <div className="flex flex-col gap-3 flex-1">
               <span>Номер телефону</span>
-              <span className='font-semibold'>+38 686 343 090</span>
+              <span className='font-semibold'>{props.phone_number}</span>
             </div>
           </div>
         )}
 
         <div className="flex gap-2">
-          <Button myColorScheme='filled' className='flex-1'>Прийняти</Button>
-          <Button myColorScheme='declined' className='flex-1'>Відхилити</Button>
+          <Button myColorScheme='filled' className='flex-1' onClick={onAcceptClick}>Прийняти</Button>
+          <Button myColorScheme='declined' className='flex-1' onClick={onDeclineClick}>Відхилити</Button>
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ export type tabsType = ""
   | "settings"
   | "settings/gate"
   | "settings/location"
+  | "settings/location/create"
   | "settings/location/accesspoint";
 
 interface IAccount {

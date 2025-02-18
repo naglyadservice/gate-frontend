@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { ILocation, useLocation } from "./locations";
 
 type currentGate = {
   id: string;
@@ -6,24 +7,15 @@ type currentGate = {
   address: string;
 }
 
-type currentLocation = {
-  id: string;
-  name: string;
-  city: string;
-  address: string;
-  cameraUrl: string;
-  code: string;
-}
-
 interface IAccountGate {
   currentGate: currentGate;
   setCurrentGate: (gate: currentGate) => void;
 
-  currentLocation: Partial<currentLocation>;
-  setCurrentLocation: (location: Partial<currentLocation>) => void;
+  currentLocation: Partial<ILocation>;
+  setCurrentLocation: (id: string) => void;
 }
 
-export const useAccountSettings = create<IAccountGate>((set) => ({
+export const useAccountSettings = create<IAccountGate>((set, get) => ({
   currentGate: {
     id: "",
     gateFor: "",
@@ -31,13 +23,14 @@ export const useAccountSettings = create<IAccountGate>((set) => ({
   },
 
   currentLocation: {
+    id: "",
     name: "",
-    city: "",
     address: "",
-    cameraUrl: "",
-    code: ""
+    access_code: "",
+    accesspoint_ids: []
   },
 
   setCurrentGate: (gate) => set({ currentGate: gate }),
-  setCurrentLocation: (location) => set({ currentLocation: location })
+  setCurrentLocation: (id) => set({ currentLocation: useLocation.getState().locations.find(el => el.id === id) }),
 }));
+

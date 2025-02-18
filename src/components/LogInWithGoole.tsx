@@ -1,13 +1,11 @@
 import googleLogo from "../assets/google.svg"
 import Layout from "../layout/Layout"
 
-import { useAuth } from "../state/auth";
+import apiClient from "../utils/client";
 
 function LogInWithGoole() {
-  const { authGoogleRedirectUrl } = useAuth();
-
-  const onButtonClick = () => {
-    window.location.assign(authGoogleRedirectUrl);
+  const onButtonClick = async () => {
+    apiClient.get(`/auth/google/login`).then(res => window.location.assign(res.data.auth_url))
   }
 
   return (

@@ -1,14 +1,10 @@
 import toast from "react-hot-toast";
 import { create } from "zustand";
-import apiClient from "./client";
+import apiClient from "../utils/client";
 
-interface IGate {
-  id: string;
-  label: string;
-}
 
 interface IGates {
-  gates: IGate[];
+  gates: IAccesspoint[];
 
   openGateById: (accesspoint_id: string) => Promise<void>;
 }
@@ -32,9 +28,7 @@ const useGates = create<IGates & IGatesFetching>((set) => ({
     try {
       set({ isGatesLoading: true, isGatesError: false });
 
-      const { data } = await apiClient.get<IGates['gates']>(`/me/accesspoints`);
-
-      // const { data } = await apiClient.get<IGates['gates']>(`https://666458a8932baf9032aac87b.mockapi.io/gates`);
+      const { data } = await apiClient.get<IGates['gates']>(`/users/me/accesspoints`);
 
       set({ gates: data });
     } catch (error) {

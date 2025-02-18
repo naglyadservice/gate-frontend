@@ -1,6 +1,5 @@
 import { ArrowLeft } from 'lucide-react';
 
-import { useAccountTab } from '../state/account.tabs';
 import AccountRequests from './AccountRequests';
 import AccountHistory from './AccountHistory';
 import AccountUsers from './AccountUsers';
@@ -8,15 +7,19 @@ import AccountSettings from './AccountSettings';
 import AccountSettingsEditGate from './AccountSettingEditGate';
 import AccountSettingsEditLocation from './AccountSettingEditLocation';
 import AccountSettingsEditLocationAccesspoints from './AccountSettingEditLocationAccesspoints';
+import AccountSettingsCreateLocation from './AccountSettingCreateLocation';
 
+import { useAccountTab } from '../state/account.tabs';
 
 
 function Account() {
   const { tab, setTab } = useAccountTab();
 
   const onBackClick = () => {
+
     if (tab === "settings/gate") return setTab("settings");
     if (tab === "settings/location") return setTab("settings");
+    if (tab === "settings/location/create") return setTab("settings");
     if (tab === "settings/location/accesspoint") return setTab("settings/location");
 
     setTab("");
@@ -35,6 +38,7 @@ function Account() {
       {tab === "settings" && <AccountSettings />}
       {tab === "settings/gate" && <AccountSettingsEditGate />}
       {tab === "settings/location" && <AccountSettingsEditLocation />}
+      {tab === "settings/location/create" && <AccountSettingsCreateLocation />}
       {tab === "settings/location/accesspoint" && <AccountSettingsEditLocationAccesspoints />}
     </div>
   )

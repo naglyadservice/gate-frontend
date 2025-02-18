@@ -1,13 +1,51 @@
 import toast from 'react-hot-toast';
 import Button from '../components/Button';
 import { Checkbox } from 'antd';
+import { useLocation } from '../state/locations';
+import React from 'react';
+import { useAccountTab } from '../state/account.tabs';
+import apiClient from '../utils/client';
+import { useAccountSettings } from '../state/acoount.settings';
 
 
 
 function AccountSettingsEditLocationAccesspoints() {
+  const { currentLocation, addAccessPointsIds, removeAccessPointsIds } = useAccountSettings();
+  const [selectedIds, setSelectedIds] = React.useState<string[]>(currentLocation.accesspoints?.map(item => item.id) || []);
+  const [myGates, setMyGates] = React.useState<IMyAccesspoints[]>([]);
+  const { setTab } = useAccountTab()
+
+  React.useEffect(() => {
+    apiClient.get(`/users/me/accesspoints/owned`)
+      .then((res) => {
+        if (res.status != 200) return toast.error("Помилка під час запиту");
+        setMyGates(res.data);
+      }).catch(() => {
+        toast.error("Помилка під час запиту");
+      })
+  }, [])
 
   const onSaveButtonClick = () => {
-    toast.success('Зміни збережено');
+    if (!currentLocation?.id) return;
+
+    apiClient.patch(`/users/me/locations/${currentLocation.id}`, {
+      ...currentLocation,
+      accesspoint_ids: selectedIds,
+    }).then((res) => {
+      if (res.status != 204) return toast.error("Помилка під час відправлення");
+      setTab("settings");
+      toast.success('Зміни збережено');
+    }).catch(err => { toast.error("Помилка під час відправлення") })
+  }
+
+  const onCheckboxChange = (accesspoint_id: string) => {
+    const isChecked = selectedIds.includes(accesspoint_id);
+
+    if (isChecked) {
+      setSelectedIds(prev => prev.filter(id => id !== accesspoint_id))
+    } else {
+      setSelectedIds(prev => prev.concat(accesspoint_id))
+    }
   }
 
   return (
@@ -18,12 +56,21 @@ function AccountSettingsEditLocationAccesspoints() {
         </div>
 
         <ul className="flex flex-col px-2 py-1 bg-white rounded-lg divide-y divide-[#E5E5E5] text-sm">
+          {myGates.length === 0 && <span className='px-1 py-3'>No gates</span>}
+
+          {myGates.length > 0 && myGates.map(accesspoint => (
+            <li className='px-1 py-3 flex items-center' key={accesspoint.id}>
+              <span>{accesspoint.address}</span>
+              <Checkbox
+                className='ml-auto'
+                checked={selectedIds.includes(accesspoint.id)}
+                onChange={onCheckboxChange.bind(null, accesspoint.id)}
+              />
+            </li>
+          ))}
+
           <li className='px-1 py-3 flex items-center'>
-            <span>вул. Симона Петлюри 32, м. Київ</span>
-            <Checkbox className='ml-auto' />
-          </li>
-          <li className='px-1 py-3 flex items-center'>
-            <span>вул. Симона Петлюри 32, м. Київ</span>
+            <span>Тестовая</span>
             <Checkbox className='ml-auto' />
           </li>
         </ul>

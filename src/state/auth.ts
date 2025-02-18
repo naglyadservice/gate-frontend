@@ -1,31 +1,28 @@
 import { create } from "zustand";
-import apiClient from "./client";
+import apiClient from "../utils/client";
 import toast from "react-hot-toast";
 
 
 interface IAuth {
-  user_id: string;
+  id: string;
   email: string;
   name: string;
-  picture_url: string;
+  image_url: string;
 }
 
 interface IAuthFetching {
   isAuthLoading: boolean;
   isAuthError: boolean;
 
-  authGoogleRedirectUrl: string;
-
-  getAuthMe: () => void;
-  getGoogleLoginUrl: () => void;
+  getAuthMe: () => Promise<void>;
   logout: () => void;
 }
 
 const useAuth = create<IAuth & IAuthFetching>((set) => ({
-  user_id: "",
+  id: "",
   name: "",
   email: "",
-  picture_url: "",
+  image_url: "",
 
   isAuthLoading: true,
   isAuthError: false,
@@ -35,7 +32,7 @@ const useAuth = create<IAuth & IAuthFetching>((set) => ({
   getAuthMe: async () => {
     try {
       set({ isAuthLoading: true, isAuthError: false });
-      const { data } = await apiClient.get<IAuth>(`/me`);
+      const { data } = await apiClient.get<IAuth>(`/users/me`);
 
       set(data);
       console.log(data);
@@ -46,26 +43,15 @@ const useAuth = create<IAuth & IAuthFetching>((set) => ({
     }
   },
 
-  getGoogleLoginUrl: async () => {
-    try {
-      const { data } = await apiClient.get(`/auth/google/login`);
-
-      set({ authGoogleRedirectUrl: data.auth_url });
-    } catch (error) {
-      toast.error("Error...");
-      console.warn({ error });
-    }
-  },
-
   logout: async () => {
     try {
       await apiClient.post("/auth/logout");
 
       set({
-        user_id: "",
+        id: "",
         email: "",
         name: "",
-        picture_url: "",
+        image_url: "",
       });
     } catch (error) {
       toast.error("Error...");

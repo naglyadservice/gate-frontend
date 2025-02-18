@@ -1,13 +1,13 @@
 import React from "react";
 import { Toaster } from "react-hot-toast";
-import { ErrorBoundary } from "react-error-boundary";
 import { BrowserRouter } from "react-router";
+import { ErrorBoundary } from "react-error-boundary";
 import { ConfigProvider } from "antd";
 
 import Layout from "./layout/Layout";
 import Header from "./layout/Header";
 import Error from "./components/Error";
-import Spinner from "./components/Spinner";
+import { PageSpinner } from "./components/Spinner";
 import LogInWithGoole from "./components/LogInWithGoole";
 import ActivateDevice from "./accesspoints/ActivateDevice";
 
@@ -41,7 +41,7 @@ function App() {
   //   return () => clearTimeout(timer);
   // }, [deferredPrompt])
 
-  if (isAuthLoading) return (<Spinner />);
+  if (isAuthLoading) return (<PageSpinner />);
 
   if (!id) return (<LogInWithGoole />);
 

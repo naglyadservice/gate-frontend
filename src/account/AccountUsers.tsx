@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import apiClient from '../utils/client';
 import { useLocation } from '../state/locations';
 
+import { SmallSpinner } from '../components/Spinner';
 import AccountUsersItem from './AccountUsersItem';
 import AccountRequestsLocationsAccordion from './AccountRequestsLocationsAccordion';
 
@@ -11,11 +12,14 @@ import AccountRequestsLocationsAccordion from './AccountRequestsLocationsAccordi
 
 
 function AccountUsers() {
+  const [isLoading, setIsloading] = React.useState(false);
   const [users, setUsers] = React.useState<IUser[]>([]);
   const selectedLocation = useLocation(selector => selector.selectedLocation);
 
   React.useEffect(() => {
     if (!selectedLocation?.id) return;
+
+    setIsloading(true);
 
     apiClient.get(`/users/me/locations/${selectedLocation.id}/users`)
       .then((res) => {
@@ -23,7 +27,7 @@ function AccountUsers() {
         setUsers(res.data);
       }).catch(() => {
         toast.error("Помилка під час запиту");
-      })
+      }).finally(() => setIsloading(false));
   }, [selectedLocation])
 
   return (
@@ -34,9 +38,11 @@ function AccountUsers() {
           <AccountRequestsLocationsAccordion />
         </div>
         <div className='flex flex-col gap-3'>
-          {users.length === 0 && <>Користувачі по локації "{selectedLocation?.name}" відсутні</>}
+          {isLoading && <SmallSpinner />}
 
-          {users.length > 0 && users.map((item, index) => (
+          {!isLoading && users.length === 0 && <>Користувачі по локації "{selectedLocation?.name}" відсутні</>}
+
+          {!isLoading && users.length > 0 && users.map((item, index) => (
             <AccountUsersItem {...item} key={index} />
           ))}
 

@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import apiClient from '../utils/client';
 import { useLocation } from '../state/locations';
 
+import { SmallSpinner } from '../components/Spinner';
 import AccountHistoryItem from './AccountHistoryItem'
 import AccountRequestsLocationsAccordion from './AccountRequestsLocationsAccordion'
 
@@ -16,11 +17,14 @@ interface IRequest {
 
 
 function AccountHistory() {
+  const [isLoading, setIsloading] = React.useState(false);
   const [history, setHistory] = React.useState<IRequest[]>([]);
   const selectedLocation = useLocation(selector => selector.selectedLocation);
 
   React.useEffect(() => {
     if (!selectedLocation?.id) return;
+
+    setIsloading(true);
 
     apiClient.get(`/users/me/locations/${selectedLocation.id}/logs`)
       .then((res) => {
@@ -28,7 +32,7 @@ function AccountHistory() {
         setHistory(res.data);
       }).catch(() => {
         toast.error("Помилка під час запиту");
-      })
+      }).finally(() => setIsloading(false));
   }, [selectedLocation])
 
   return (
@@ -39,9 +43,11 @@ function AccountHistory() {
           <AccountRequestsLocationsAccordion />
         </div>
         <div className='flex flex-col gap-3'>
-          {history.length === 0 && <>Історія по локації "{selectedLocation?.name}" відсутня</>}
+          {isLoading && <SmallSpinner />}
 
-          {history.length > 0 && history.map((item, index) => (
+          {!isLoading && history.length === 0 && <>Історія по локації "{selectedLocation?.name}" відсутня</>}
+
+          {!isLoading && history.length > 0 && history.map((item, index) => (
             <AccountHistoryItem {...item.user} key={index} />
           ))}
 

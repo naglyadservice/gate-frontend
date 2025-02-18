@@ -27,13 +27,13 @@ function AccountRequestsLocationsAccordion() {
       </div>
 
       {isOpened && (
-        <div className='absolute z-10 top-full right-0 w-full'>
+        <div className='absolute z-10 top-full right-0'>
           <div className='flex flex-col divide-y divide-[#EBECEC] bg-white rounded'>
             {locations.length > 0 && locations.map(el => (
               <span
                 key={el.id}
                 onClick={onLocationClick.bind(null, el)}
-                className='py-2 px-3 cursor-pointer'
+                className='py-2 px-4 cursor-pointer'
               >
                 {el.name}
               </span>

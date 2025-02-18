@@ -8,13 +8,14 @@ import src from "../assets/location.svg";
 interface IProps {
   id: string;
   address: string;
+  label: string;
 
   isEditing: boolean;
 }
 
 
 
-function LocationItem({ address, id, isEditing }: IProps) {
+function LocationItem({ address, label, id, isEditing }: IProps) {
   const setTabs = useAccountTab(selector => selector.setTab);
   const setCurrentLocation = useAccountSettings(selector => selector.setCurrentLocation);
 
@@ -32,7 +33,8 @@ function LocationItem({ address, id, isEditing }: IProps) {
       />
 
       <div className="flex flex-col text-sm sm:text-base">
-        <span className='font-semibold'>{address}</span>
+        <span className='font-medium text-[#5977ff] uppercase'>{label || id}</span>
+        <span className='font-semibold'>{address || ""}</span>
       </div>
 
       {isEditing && (

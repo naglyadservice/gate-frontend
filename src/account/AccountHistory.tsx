@@ -21,7 +21,7 @@ function AccountHistory() {
   React.useEffect(() => {
     if (!selectedLocation?.id) return;
 
-    apiClient.get(`/users/me/locations/${selectedLocation.id}/requests`)
+    apiClient.get(`/users/me/locations/${selectedLocation.id}/logs`)
       .then((res) => {
         if (res.status != 200) return toast.error("Помилка під час запиту");
         setHistory(res.data);
@@ -44,11 +44,11 @@ function AccountHistory() {
             <AccountHistoryItem {...item.user} key={index} />
           ))}
 
-          <AccountHistoryItem
+          {/* <AccountHistoryItem
             user={{ name: "Тестовый", auto_1: "AP1221AP" }}
             accesspoint={{ address: "вул. Симона Петлюри 32, м. Київ" }}
             created_at='2025-02-18T09:41:13.243Z'
-          />
+          /> */}
         </div>
       </div>
     </div>

@@ -14,12 +14,12 @@ interface IProps {
 
 
 function LocationItem({ address, id, isEditing }: IProps) {
-  const setTab = useAccountTab(selector => selector.setTab);
+  const setTabs = useAccountTab(selector => selector.setTab);
   const setCurrentLocation = useAccountSettings(selector => selector.setCurrentLocation);
 
   const onEditClick = () => {
     setCurrentLocation(id);
-    setTab("settings/location");
+    setTabs("settings/location");
   }
 
   return (

@@ -27,7 +27,7 @@ function MyAccesspointsList() {
           key={el.id}
           id={el.id}
           address={el.address}
-          gateFor="точка проїзду"
+          gateFor={el.label || "точка проїзду"}
           isEditing={true}
         />
       ))}

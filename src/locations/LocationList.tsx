@@ -6,12 +6,10 @@ import { useLocation } from "../state/locations";
 
 function LocationList() {
   const user_id = useAuth(selector => selector.id);
-  const { locations, getAllLocations } = useLocation();
   const tab = useAccountTab(selector => selector.tab);
+  const { locations, getAllLocations } = useLocation();
 
   React.useEffect(() => {
-    // if (!user_id) return;
-
     getAllLocations();
   }, [user_id])
 

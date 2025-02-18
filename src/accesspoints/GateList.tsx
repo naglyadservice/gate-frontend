@@ -2,13 +2,10 @@ import React from "react";
 import GateItem from "./GateItem";
 import { useAuth } from "../state/auth";
 import { useGates } from "../state/accesspoints";
-import { useAccountTab } from "../state/account.tabs";
 
 function GateList() {
   const id = useAuth(selector => selector.id);
   const { getAllGates, gates } = useGates();
-  const tab = useAccountTab(selector => selector.tab);
-
 
   React.useEffect(() => {
     if (!id) return;
@@ -25,8 +22,7 @@ function GateList() {
           key={el.id}
           id={el.id}
           address={el.address}
-          gateFor="точка проїзду"
-          isEditing={tab === "settings"}
+          gateFor={el.label || "точка проїзду"}
         />
       ))}
     </ul>

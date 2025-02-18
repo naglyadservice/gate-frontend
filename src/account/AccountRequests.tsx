@@ -45,7 +45,7 @@ function AccountRequests() {
         <div className='flex flex-col gap-3'>
           {isLoading && <SmallSpinner />}
 
-          {!isLoading && request.length === 0 && <>Запити на локацію "{selectedLocation?.name}" відсутні</>}
+          {!isLoading && request.length === 0 && <span>Запити на локацію "{selectedLocation?.name}" відсутні</span>}
 
           {!isLoading && request.length > 0 && request.map(item => (
             <AccountRequestItem {...item.user} id={item.id} key={item.id} />

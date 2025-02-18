@@ -1,7 +1,7 @@
 import React from "react";
 import { CircleCheck, CircleX, Loader, Pencil } from "lucide-react";
 
-import { useGates } from "../state/accesspoints";
+import apiClient from "../utils/client";
 import { useAccountSettings } from "../state/acoount.settings";
 import { useAccountTab } from "../state/account.tabs";
 
@@ -22,7 +22,6 @@ type statuses = "loading" | "error" | "success" | "ready";
 
 
 function GateItem({ gateFor, address, id, isEditing }: IProps) {
-  const { openGateById } = useGates();
   const setTab = useAccountTab(selector => selector.setTab);
   const setCurrentGate = useAccountSettings(selector => selector.setCurrentGate);
   const [status, setStatus] = React.useState<statuses>("ready");
@@ -30,7 +29,7 @@ function GateItem({ gateFor, address, id, isEditing }: IProps) {
   const onOpenClick = () => {
     setStatus("loading");
 
-    openGateById(id)
+    apiClient.post(`/me/accesspoints/${id}/activate`)
       .then(() => setStatus("success"))
       .catch(() => setStatus("error"))
       .finally(() => setTimeout(() => setStatus("ready"), 5000));

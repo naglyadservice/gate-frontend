@@ -40,7 +40,7 @@ function AccountUsers() {
         <div className='flex flex-col gap-3'>
           {isLoading && <SmallSpinner />}
 
-          {!isLoading && users.length === 0 && <>Користувачі по локації "{selectedLocation?.name}" відсутні</>}
+          {!isLoading && users.length === 0 && <span>Користувачі по локації "{selectedLocation?.name}" відсутні</span>}
 
           {!isLoading && users.length > 0 && users.map((item, index) => (
             <AccountUsersItem {...item} key={index} />

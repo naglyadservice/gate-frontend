@@ -1,27 +1,37 @@
 import React from "react";
+import toast from "react-hot-toast";
 
+import apiClient from "../utils/client";
 import { useAuth } from "../state/auth";
-import { useGates } from "../state/accesspoints";
 
 import GateItem from "./GateItem";
+import { SmallSpinner } from "../components/Spinner";
 
 
 
 function GateList() {
   const id = useAuth(selector => selector.id);
-  const { getAllGates, gates } = useGates();
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [accesspoints, setAccesspoints] = React.useState<IAccesspoint[]>([]);
 
   React.useEffect(() => {
     if (!id) return;
 
-    getAllGates();
-  }, [id])
+    setIsLoading(true);
 
-  if (!gates.length) return null;
+    apiClient.get(`/users/me/accesspoints`)
+      .then((res) => setAccesspoints(res.data))
+      .catch(() => toast.error("Error..."))
+      .finally(() => setIsLoading(false));
+  }, [id])
 
   return (
     <ul className="flex flex-col gap-4 sm:gap-5">
-      {gates.length > 0 && gates.map(el => (
+      {isLoading && <SmallSpinner />}
+
+      {!isLoading && accesspoints.length === 0 && <span>Точки доступу відсутні</span>}
+
+      {!isLoading && accesspoints.length > 0 && accesspoints.map(el => (
         <GateItem
           key={el.id}
           id={el.id}

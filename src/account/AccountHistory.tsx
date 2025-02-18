@@ -45,7 +45,7 @@ function AccountHistory() {
         <div className='flex flex-col gap-3'>
           {isLoading && <SmallSpinner />}
 
-          {!isLoading && history.length === 0 && <>Історія по локації "{selectedLocation?.name}" відсутня</>}
+          {!isLoading && history.length === 0 && <span>Історія по локації "{selectedLocation?.name}" відсутня</span>}
 
           {!isLoading && history.length > 0 && history.map((item, index) => (
             <AccountHistoryItem {...item.user} key={index} />

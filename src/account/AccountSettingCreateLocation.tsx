@@ -25,7 +25,7 @@ function AccountSettingsCreateLocation() {
         return toast.success("Запит відправлено");
       }
       toast.error("Помилка під час відправлення");
-    }).catch(err => { toast.error("Помилка під час відправлення") })
+    }).catch(() => { toast.error("Помилка під час відправлення") })
   }
 
   return (

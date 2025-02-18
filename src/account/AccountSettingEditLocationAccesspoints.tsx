@@ -1,7 +1,6 @@
 import toast from 'react-hot-toast';
 import Button from '../components/Button';
 import { Checkbox } from 'antd';
-import { useLocation } from '../state/locations';
 import React from 'react';
 import { useAccountTab } from '../state/account.tabs';
 import apiClient from '../utils/client';
@@ -10,7 +9,7 @@ import { useAccountSettings } from '../state/acoount.settings';
 
 
 function AccountSettingsEditLocationAccesspoints() {
-  const { currentLocation, addAccessPointsIds, removeAccessPointsIds } = useAccountSettings();
+  const { currentLocation } = useAccountSettings();
   const [selectedIds, setSelectedIds] = React.useState<string[]>(currentLocation.accesspoints?.map(item => item.id) || []);
   const [myGates, setMyGates] = React.useState<IMyAccesspoints[]>([]);
   const { setTab } = useAccountTab()
@@ -35,7 +34,7 @@ function AccountSettingsEditLocationAccesspoints() {
       if (res.status != 204) return toast.error("Помилка під час відправлення");
       setTab("settings");
       toast.success('Зміни збережено');
-    }).catch(err => { toast.error("Помилка під час відправлення") })
+    }).catch(() => { toast.error("Помилка під час відправлення") })
   }
 
   const onCheckboxChange = (accesspoint_id: string) => {

@@ -15,7 +15,7 @@ interface IAccountGate {
   setCurrentLocation: (id: string) => void;
 }
 
-export const useAccountSettings = create<IAccountGate>((set, get) => ({
+export const useAccountSettings = create<IAccountGate>((set) => ({
   currentGate: {
     id: "",
     gateFor: "",

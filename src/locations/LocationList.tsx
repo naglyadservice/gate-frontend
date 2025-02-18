@@ -5,7 +5,7 @@ import LocationItem from "./LocationItem";
 import { useLocation } from "../state/locations";
 
 function LocationList() {
-  const user_id = useAuth(selector => selector.user_id);
+  const user_id = useAuth(selector => selector.id);
   const { locations, getAllLocations } = useLocation();
   const tab = useAccountTab(selector => selector.tab);
 

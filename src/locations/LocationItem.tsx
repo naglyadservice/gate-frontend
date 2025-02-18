@@ -1,7 +1,8 @@
 import { Pencil } from "lucide-react";
-import src from "../assets/location.svg";
-import { useAccountSettings } from "../state/acoount.settings";
 import { useAccountTab } from "../state/account.tabs";
+import { useAccountSettings } from "../state/acoount.settings";
+
+import src from "../assets/location.svg";
 
 interface IProps {
   id: string;

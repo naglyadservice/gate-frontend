@@ -31,7 +31,7 @@ function AccountSettingsEditLocation() {
       if (res.status != 204) return toast.error("Помилка під час відправлення");
       setTab("settings");
       toast.success('Зміни збережено');
-    }).catch(err => { toast.error("Помилка під час відправлення") })
+    }).catch(() => { toast.error("Помилка під час відправлення") })
   }
 
   const onCopyButtonClick = () => {

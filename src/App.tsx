@@ -1,22 +1,23 @@
 import React from "react";
 import { Toaster } from "react-hot-toast";
 import { ErrorBoundary } from "react-error-boundary";
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter } from "react-router";
+import { ConfigProvider } from "antd";
 
 import Layout from "./layout/Layout";
 import Header from "./layout/Header";
 import Error from "./components/Error";
 import Spinner from "./components/Spinner";
 import LogInWithGoole from "./components/LogInWithGoole";
+import ActivateDevice from "./accesspoints/ActivateDevice";
+
 import Account from "./account/Account";
 import AccessPoints from "./accesspoints/AccessPoints";
 
 import { useAuth } from "./state/auth";
-import useInvokePWA from "./components/InvokePWA.hook";
-import { useAccountTab } from "./state/account.tabs";
-import { ConfigProvider } from "antd";
 import { useLocation } from "./state/locations";
-
+import { useAccountTab } from "./state/account.tabs";
+import useInvokePWA from "./components/InvokePWA.hook";
 
 
 
@@ -24,7 +25,7 @@ function App() {
   const { id } = useAuth();
   const { isAuthLoading, isAuthError, getAuthMe } = useAuth();
   const { getAllLocations } = useLocation();
-  // const { triggerInstall, deferredPrompt } = useInvokePWA();
+  const { triggerInstall, deferredPrompt } = useInvokePWA();
 
   const isAccount = useAccountTab(selector => selector.tab);
 
@@ -35,10 +36,10 @@ function App() {
     })();
   }, []);
 
-  // React.useEffect(() => {
-  //   const timer = setTimeout(() => triggerInstall(), 3000);
-  //   return () => clearTimeout(timer);
-  // }, [deferredPrompt])
+  React.useEffect(() => {
+    const timer = setTimeout(() => triggerInstall(), 3000);
+    return () => clearTimeout(timer);
+  }, [deferredPrompt])
 
   if (isAuthLoading) return (<Spinner />);
 
@@ -66,6 +67,7 @@ function App() {
             </>}
 
             <Toaster position="bottom-right" />
+            <ActivateDevice />
           </Layout>
         </ConfigProvider>
       </BrowserRouter>

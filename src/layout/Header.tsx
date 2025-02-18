@@ -6,7 +6,6 @@ import { useDrawer } from "../state/drawer";
 import logo from "../assets/logo.svg";
 import personalArea from "../assets/personal-area.svg";
 import { tabsType, useAccountTab } from "../state/account.tabs";
-import { useNavigate } from "react-router";
 
 
 
@@ -14,7 +13,6 @@ function Header() {
   const { isDrawer, toggleDrawer } = useDrawer();
   const { name, email, image_url, logout } = useAuth();
   const setAccountTab = useAccountTab(selector => selector.setTab);
-  const navigate = useNavigate();
 
   const onButtonTabClick = (tab: tabsType) => {
     setAccountTab(tab);

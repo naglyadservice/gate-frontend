@@ -17,7 +17,7 @@ import AccessPoints from "./accesspoints/AccessPoints";
 import { useAuth } from "./state/auth";
 import { useLocation } from "./state/locations";
 import { useAccountTab } from "./state/account.tabs";
-import useInvokePWA from "./components/InvokePWA.hook";
+// import useInvokePWA from "./components/InvokePWA.hook";
 
 
 
@@ -25,7 +25,7 @@ function App() {
   const { id } = useAuth();
   const { isAuthLoading, isAuthError, getAuthMe } = useAuth();
   const { getAllLocations } = useLocation();
-  const { triggerInstall, deferredPrompt } = useInvokePWA();
+  // const { triggerInstall, deferredPrompt } = useInvokePWA();
 
   const isAccount = useAccountTab(selector => selector.tab);
 
@@ -36,10 +36,10 @@ function App() {
     })();
   }, []);
 
-  React.useEffect(() => {
-    const timer = setTimeout(() => triggerInstall(), 3000);
-    return () => clearTimeout(timer);
-  }, [deferredPrompt])
+  // React.useEffect(() => {
+  //   const timer = setTimeout(() => triggerInstall(), 3000);
+  //   return () => clearTimeout(timer);
+  // }, [deferredPrompt])
 
   if (isAuthLoading) return (<Spinner />);
 

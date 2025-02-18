@@ -42,7 +42,7 @@ function ActivateDevice() {
   }
 
   if (isModal) {
-    return <div className='fixed bottom-0 top-0 left-0 right-0 z-50 bg-black bg-opacity-50 overflow-auto'>
+    return <div className='fixed bottom-0 top-0 left-0 right-0 z-50 bg-black bg-opacity-50 overflow-auto shadow-lg'>
       <div className='min-h-[100vh] w-full py-10 px-3 flex flex-col justify-center items-center '>
         <div className='bg-white rounded-xl w-full max-w-sm p-6 relative'>
           <button

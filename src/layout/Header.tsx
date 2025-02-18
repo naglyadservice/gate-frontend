@@ -43,7 +43,7 @@ function Header() {
         </div>
 
         {isDrawer && (
-          <div className="absolute z-10 top-full right-0">
+          <div className="absolute z-20 top-full right-0 shadow-lg">
             <div className="p-3 bg-white rounded-md border">
               <div className="flex flex-col gap-3">
                 <div className="flex flex-col">

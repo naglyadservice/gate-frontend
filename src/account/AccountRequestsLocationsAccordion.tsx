@@ -27,7 +27,7 @@ function AccountRequestsLocationsAccordion() {
       </div>
 
       {isOpened && (
-        <div className='absolute z-10 top-full right-0'>
+        <div className='absolute z-10 top-full right-0 shadow-md'>
           <div className='flex flex-col divide-y divide-[#EBECEC] bg-white rounded'>
             {locations.length > 0 && locations.map(el => (
               <span

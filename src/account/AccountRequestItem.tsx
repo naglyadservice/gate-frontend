@@ -22,7 +22,7 @@ function AccountRequestItem(props: Partial<IUser>) {
     if (!selectedLocation?.id) return console.log("no location's id");
     if (!props?.id) return console.log("no request's id");
 
-    apiClient.get(`/users/me/locations/${selectedLocation?.id}/requests/${props.id}/accept`)
+    apiClient.post(`/users/me/locations/${selectedLocation?.id}/requests/${props.id}/accept`)
       .then((res) => {
         console.log(res)
       }).catch(() => {
@@ -34,7 +34,7 @@ function AccountRequestItem(props: Partial<IUser>) {
     if (!selectedLocation?.id) return console.log("no location's id");
     if (!props?.id) return console.log("no request's id");
 
-    apiClient.get(`/users/me/locations/${selectedLocation?.id}/requests/${props.id}/reject`)
+    apiClient.post(`/users/me/locations/${selectedLocation?.id}/requests/${props.id}/reject`)
       .then((res) => {
         console.log(res)
       }).catch(() => {

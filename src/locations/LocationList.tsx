@@ -1,8 +1,12 @@
 import React from "react";
+
 import { useAuth } from "../state/auth";
-import { useAccountTab } from "../state/account.tabs";
-import LocationItem from "./LocationItem";
 import { useLocation } from "../state/locations";
+import { useAccountTab } from "../state/account.tabs";
+
+import LocationItem from "./LocationItem";
+
+
 
 function LocationList() {
   const user_id = useAuth(selector => selector.id);

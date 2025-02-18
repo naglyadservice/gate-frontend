@@ -1,7 +1,7 @@
+import { useAccountTab } from '../state/account.tabs';
+
 import Button from '../components/Button';
 import LocationList from '../locations/LocationList';
-
-import { useAccountTab } from '../state/account.tabs';
 import MyAccesspointsList from './AccountMyAccesspoints';
 
 

@@ -1,9 +1,12 @@
 import React from 'react'
 import toast from 'react-hot-toast';
-import { useLocation } from 'react-router'
-import apiClient from '../utils/client';
 import { AxiosError } from 'axios';
+import { useLocation } from 'react-router'
 import { AlertCircle, CheckCircle, X } from 'lucide-react';
+
+import apiClient from '../utils/client';
+
+
 
 function ActivateDevice() {
   const { pathname, search } = useLocation();

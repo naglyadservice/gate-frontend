@@ -1,10 +1,11 @@
 import React from 'react'
-import AccountHistoryItem from './AccountHistoryItem'
-import AccountRequestsLocationsAccordion from './AccountRequestsLocationsAccordion'
+import toast from 'react-hot-toast';
 
 import apiClient from '../utils/client';
 import { useLocation } from '../state/locations';
-import toast from 'react-hot-toast';
+
+import AccountHistoryItem from './AccountHistoryItem'
+import AccountRequestsLocationsAccordion from './AccountRequestsLocationsAccordion'
 
 interface IRequest {
   user: IUser;

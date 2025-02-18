@@ -1,5 +1,7 @@
 import LocationList from './LocationList';
 
+
+
 export default function Locations() {
   return (
     <>

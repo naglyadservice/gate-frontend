@@ -1,9 +1,11 @@
 import React from 'react';
-import AccountUsersItem from './AccountUsersItem';
-import apiClient from '../utils/client';
-import AccountRequestsLocationsAccordion from './AccountRequestsLocationsAccordion';
-import { useLocation } from '../state/locations';
 import toast from 'react-hot-toast';
+
+import apiClient from '../utils/client';
+import { useLocation } from '../state/locations';
+
+import AccountUsersItem from './AccountUsersItem';
+import AccountRequestsLocationsAccordion from './AccountRequestsLocationsAccordion';
 
 
 

@@ -1,10 +1,12 @@
-import toast from 'react-hot-toast';
-import Button from '../components/Button';
-import { Checkbox } from 'antd';
 import React from 'react';
-import { useAccountTab } from '../state/account.tabs';
+import toast from 'react-hot-toast';
+import { Checkbox } from 'antd';
+
 import apiClient from '../utils/client';
+import { useAccountTab } from '../state/account.tabs';
 import { useAccountSettings } from '../state/acoount.settings';
+
+import Button from '../components/Button';
 
 
 

@@ -1,9 +1,11 @@
 import React from 'react';
+import toast from 'react-hot-toast';
+
+import apiClient from '../utils/client';
 import { useLocation } from '../state/locations';
+
 import AccountRequestItem from './AccountRequestItem';
 import AccountRequestsLocationsAccordion from './AccountRequestsLocationsAccordion';
-import apiClient from '../utils/client';
-import toast from 'react-hot-toast';
 
 interface IRequest {
   id: string;

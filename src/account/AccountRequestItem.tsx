@@ -1,12 +1,13 @@
 import React from 'react';
 import cn from "classnames";
+import toast from 'react-hot-toast';
 import { ChevronDown } from 'lucide-react';
+
+import apiClient from '../utils/client';
+import { useLocation } from '../state/locations';
 
 import src from "../assets/personal-area.svg";
 import Button from '../components/Button';
-import apiClient from '../utils/client';
-import toast from 'react-hot-toast';
-import { useLocation } from '../state/locations';
 
 
 

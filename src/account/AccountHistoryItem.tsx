@@ -1,6 +1,7 @@
 import React from 'react';
 import cn from "classnames";
 import { ChevronDown } from 'lucide-react';
+
 import src from "../assets/personal-area.svg";
 
 interface IProps {

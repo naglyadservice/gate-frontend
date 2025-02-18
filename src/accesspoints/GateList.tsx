@@ -1,7 +1,11 @@
 import React from "react";
-import GateItem from "./GateItem";
+
 import { useAuth } from "../state/auth";
 import { useGates } from "../state/accesspoints";
+
+import GateItem from "./GateItem";
+
+
 
 function GateList() {
   const id = useAuth(selector => selector.id);

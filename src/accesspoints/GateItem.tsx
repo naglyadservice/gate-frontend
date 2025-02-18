@@ -1,12 +1,12 @@
 import React from "react";
 import { CircleCheck, CircleX, Loader, Pencil } from "lucide-react";
 
-import src from "../assets/gate.svg";
-import Button from '../components/Button';
 import { useGates } from "../state/accesspoints";
 import { useAccountSettings } from "../state/acoount.settings";
 import { useAccountTab } from "../state/account.tabs";
 
+import src from "../assets/gate.svg";
+import Button from '../components/Button';
 
 interface IProps {
   key?: number | string;

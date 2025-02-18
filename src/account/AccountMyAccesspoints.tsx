@@ -32,12 +32,12 @@ function MyAccesspointsList() {
         />
       ))}
 
-      <GateItem
+      {/* <GateItem
         id={"123"}
         address={"Some address"}
         gateFor="точка проїзду"
         isEditing={true}
-      />
+      /> */}
     </ul>
   )
 }

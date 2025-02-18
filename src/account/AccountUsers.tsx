@@ -38,14 +38,14 @@ function AccountUsers() {
             <AccountUsersItem {...item} key={index} />
           ))}
 
-          <AccountUsersItem
+          {/* <AccountUsersItem
             name='Тестовый Тестовый'
             email='test.test@gmail.com'
             phone_number='+38 111 111 1111'
             image_url=''
             auto_1='AE4675F'
             auto_2='AE7843D'
-          />
+          /> */}
         </div>
       </div>
     </div>

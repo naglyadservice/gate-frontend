@@ -1,5 +1,6 @@
 import React from 'react'
 import toast from 'react-hot-toast';
+import { IMaskInput } from 'react-imask';
 
 import apiClient from '../utils/client';
 import { useAuth } from '../state/auth';
@@ -15,13 +16,18 @@ function AccountPersonal() {
   const auth = useAuth();
   const setTabs = useAccountTab(selector => selector.setTab);
   const [name, setName] = React.useState(auth.name || "");
-  const [phone_number, setPhoneNumber] = React.useState(auth.phone_number || "");
   const [apartment_number, setApartmentNumber] = React.useState(auth.apartment_number || "");
+  const [phone_number, setPhoneNumber] = React.useState(auth.phone_number || "");
   const [auto_1, setAuto1] = React.useState(auth.auto_1 || "");
   const [auto_2, setAuto2] = React.useState(auth.auto_2 || "");
 
+
   const onSaveButtonClick = () => {
-    apiClient.patch(`/users/me`, { name, phone_number, auto_1, auto_2, apartment_number })
+    apiClient.patch(`/users/me`, {
+      name, apartment_number,
+      auto_1, auto_2,
+      phone_number,
+    })
       .then(() => toast.success("Зміни збережено"))
       .then(() => auth.getAuthMe())
       .then(() => setTabs(""))
@@ -50,18 +56,27 @@ function AccountPersonal() {
             <span className='text-sm'>Ім'я</span>
             <MyInput value={name} onChange={(e) => setName(e.target.value)} />
           </div>
+
           <div className='flex flex-col gap-2'>
             <span className='text-sm'>Номер телефону</span>
-            <MyInput value={phone_number} onChange={(e) => setPhoneNumber(e.target.value)} />
+            <IMaskInput
+              mask="+38 (000) 000-00-00"
+              defaultValue={auth.phone_number}
+              onAccept={(val) => setPhoneNumber(val)}
+              className='block w-full p-3 border border-[#AFAFB1] rounded-lg text-sm'
+            />
           </div>
+
           <div className='flex flex-col gap-2'>
             <span className='text-sm'>Номер квартиры</span>
             <MyInput value={apartment_number} onChange={(e) => setApartmentNumber(e.target.value)} type='number' />
           </div>
+
           <div className='flex flex-col gap-2'>
             <span className='text-sm'>Номер авто 1</span>
             <MyInput value={auto_1} onChange={(e) => setAuto1(e.target.value)} />
           </div>
+
           <div className='flex flex-col gap-2'>
             <span className='text-sm'>Номер авто 2</span>
             <MyInput value={auto_2} onChange={(e) => setAuto2(e.target.value)} />

@@ -61,7 +61,7 @@ function AccountUsersItem(props: Partial<IUser>) {
 
         <div className="flex flex-col gap-2">
           {/* <Button myColorScheme='filled' className='flex-1'>Зробити Модератором</Button> */}
-          <Button myColorScheme='blocked' className='flex-1' onClick={onBlockClick}>Блокувати</Button>
+          <Button myColorScheme='blocked' className='flex-1' onClick={onBlockClick}>Видалити</Button>
         </div>
       </div>
     </div>

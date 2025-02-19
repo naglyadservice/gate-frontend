@@ -9,6 +9,7 @@ interface IAuth {
   name: string;
   image_url: string;
   phone_number: string;
+  apartment_number: string;
   auto_1: string;
   auto_2: string;
   role: "" | "USER" | "ADMIN" | "SUPERADMIN";
@@ -30,6 +31,7 @@ const useAuth = create<IAuth & IAuthFetching>((set) => ({
   email: "",
   image_url: "",
   phone_number: "",
+  apartment_number: "",
   auto_1: "",
   auto_2: "",
 

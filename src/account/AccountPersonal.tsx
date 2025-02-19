@@ -16,11 +16,12 @@ function AccountPersonal() {
   const setTabs = useAccountTab(selector => selector.setTab);
   const [name, setName] = React.useState(auth.name || "");
   const [phone_number, setPhoneNumber] = React.useState(auth.phone_number || "");
+  const [apartment_number, setApartmentNumber] = React.useState(auth.apartment_number || "");
   const [auto_1, setAuto1] = React.useState(auth.auto_1 || "");
   const [auto_2, setAuto2] = React.useState(auth.auto_2 || "");
 
   const onSaveButtonClick = () => {
-    apiClient.patch(`/users/me`, { name, phone_number, auto_1, auto_2 })
+    apiClient.patch(`/users/me`, { name, phone_number, auto_1, auto_2, apartment_number })
       .then(() => toast.success("Зміни збережено"))
       .then(() => auth.getAuthMe())
       .then(() => setTabs(""))
@@ -52,6 +53,10 @@ function AccountPersonal() {
           <div className='flex flex-col gap-2'>
             <span className='text-sm'>Номер телефону</span>
             <MyInput value={phone_number} onChange={(e) => setPhoneNumber(e.target.value)} />
+          </div>
+          <div className='flex flex-col gap-2'>
+            <span className='text-sm'>Номер квартиры</span>
+            <MyInput value={apartment_number} onChange={(e) => setApartmentNumber(e.target.value)} type='number' />
           </div>
           <div className='flex flex-col gap-2'>
             <span className='text-sm'>Номер авто 1</span>

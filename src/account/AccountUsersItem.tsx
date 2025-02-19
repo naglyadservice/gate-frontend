@@ -49,12 +49,12 @@ function AccountUsersItem(props: Partial<IUser>) {
           <div className="flex gap-6 text-sm leading-none">
             <div className="flex flex-col gap-3 flex-1">
               <span>Номери машин</span>
-              <span className='font-semibold'>{props.auto_1}</span>
-              <span className='font-semibold'>{props.auto_2}</span>
+              <span className='font-semibold'>{props.auto_1 || "—"}</span>
+              <span className='font-semibold'>{props.auto_2 || "—"}</span>
             </div>
             <div className="flex flex-col gap-3 flex-1">
               <span>Номер телефону</span>
-              <span className='font-semibold'>{props.phone_number}</span>
+              <span className='font-semibold'>{props.phone_number || "—"}</span>
             </div>
           </div>
         )}

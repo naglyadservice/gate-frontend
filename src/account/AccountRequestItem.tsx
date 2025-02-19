@@ -14,6 +14,7 @@ import Button from '../components/Button';
 function AccountRequestItem(props: Partial<IUser>) {
   const [isOpened, setIsOpened] = React.useState(false);
   const selectedLocation = useLocation(selector => selector.selectedLocation);
+  const [isButtoned, setIsButtoned] = React.useState(false);
 
   const onTitleClick = () => {
     setIsOpened(prev => !prev)
@@ -24,11 +25,8 @@ function AccountRequestItem(props: Partial<IUser>) {
     if (!props?.id) return console.log("no request's id");
 
     apiClient.post(`/users/me/locations/${selectedLocation?.id}/requests/${props.id}/accept`)
-      .then((res) => {
-        console.log(res)
-      }).catch(() => {
-        toast.error("Помилка під час запиту");
-      })
+      .then(() => setIsButtoned(true))
+      .catch(() => toast.error("Помилка під час запиту"))
   }
 
   const onDeclineClick = () => {
@@ -36,12 +34,11 @@ function AccountRequestItem(props: Partial<IUser>) {
     if (!props?.id) return console.log("no request's id");
 
     apiClient.post(`/users/me/locations/${selectedLocation?.id}/requests/${props.id}/reject`)
-      .then((res) => {
-        console.log(res)
-      }).catch(() => {
-        toast.error("Помилка під час запиту");
-      })
+      .then(() => setIsButtoned(true))
+      .catch(() => toast.error("Помилка під час запиту"));
   }
+
+  if (isButtoned) return null;
 
   return (
     <div className='p-3 bg-white rounded-lg'>

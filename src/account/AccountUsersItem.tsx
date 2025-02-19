@@ -14,6 +14,7 @@ import Button from '../components/Button';
 function AccountUsersItem(props: Partial<IUser>) {
   const [isOpened, setIsOpened] = React.useState(false);
   const selectedLocation = useLocation(selector => selector.selectedLocation);
+  const [isButtoned, setIsButtoned] = React.useState(false);
 
   const onTitleClick = () => {
     setIsOpened(prev => !prev)
@@ -24,12 +25,11 @@ function AccountUsersItem(props: Partial<IUser>) {
     if (!props?.id) return console.log("no user's id");
 
     apiClient.delete(`/users/me/locations/${selectedLocation?.id}/users/${props.id}`)
-      .then((res) => {
-        console.log(res)
-      }).catch(() => {
-        toast.error("Помилка під час запиту");
-      })
+      .then(() => setIsButtoned(true))
+      .catch(() => toast.error("Помилка під час запиту"));
   }
+
+  if (isButtoned) return null;
 
   return (
     <div className='p-3 bg-white rounded-lg'>

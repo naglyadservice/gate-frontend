@@ -29,7 +29,7 @@ function GateItem({ gateFor, address, id, isEditing }: IProps) {
   const onOpenClick = () => {
     setStatus("loading");
 
-    apiClient.post(`/me/accesspoints/${id}/activate`)
+    apiClient.post(`/users/me/accesspoints/${id}/activate`)
       .then(() => setStatus("success"))
       .catch(() => setStatus("error"))
       .finally(() => setTimeout(() => setStatus("ready"), 5000));

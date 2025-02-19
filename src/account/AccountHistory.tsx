@@ -48,7 +48,7 @@ function AccountHistory() {
           {!isLoading && history.length === 0 && <span>Історія по локації "{selectedLocation?.name}" відсутня</span>}
 
           {!isLoading && history.length > 0 && history.map((item, index) => (
-            <AccountHistoryItem {...item.user} key={index} />
+            <AccountHistoryItem {...item} key={index} />
           ))}
 
           {/* <AccountHistoryItem

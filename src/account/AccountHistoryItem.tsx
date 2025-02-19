@@ -28,7 +28,8 @@ function AccountHistoryItem(props: Partial<IProps>) {
           <img src="" alt="" className='w-10 h-10 rounded-full' onError={(e) => e.currentTarget.src = src} />
           <div className="flex flex-col gap-2 text-sm leading-none">
             <span className='font-semibold'>{props.user?.name}</span>
-            <span>{date?.toLocaleString() || ""} {props.accesspoint?.address}</span>
+            <span>{date?.toLocaleString() || ""} </span>
+            <span>{props.accesspoint?.label} — {props.accesspoint?.address}</span>
           </div>
           <ChevronDown size={18} className={cn('ml-auto', (isOpened && "rotate-180"))} />
         </div>

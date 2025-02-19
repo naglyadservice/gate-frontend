@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 export type tabsType = ""
+  | "personal"
   | "requests"
   | "history"
   | "users"

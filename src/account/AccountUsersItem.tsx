@@ -35,7 +35,9 @@ function AccountUsersItem(props: Partial<IUser>) {
     <div className='p-3 bg-white rounded-lg'>
       <div className={cn("flex flex-col", (isOpened ? "gap-6" : "gap-4"))}>
         <div className="flex items-center gap-2 cursor-pointer" onClick={onTitleClick}>
-          <img src={props.image_url} alt="" className='w-10 h-10 rounded-full' onError={(e) => e.currentTarget.src = src} />
+          <div className="flex-shrink-0">
+            <img src={props.image_url} alt="" className='w-10 h-10 rounded-full' onError={(e) => e.currentTarget.src = src} />
+          </div>
           <div className="flex flex-col gap-2 text-sm leading-none">
             <span className='font-semibold'>{props.name}</span>
             <span className='text-black/50'>{props.email}</span>

@@ -8,6 +8,9 @@ interface IAuth {
   email: string;
   name: string;
   image_url: string;
+  phone_number: string;
+  auto_1: string;
+  auto_2: string;
   role: "" | "USER" | "ADMIN" | "SUPERADMIN";
 }
 
@@ -19,11 +22,17 @@ interface IAuthFetching {
   logout: () => void;
 }
 
+
+
 const useAuth = create<IAuth & IAuthFetching>((set) => ({
   id: "",
   name: "",
   email: "",
   image_url: "",
+  phone_number: "",
+  auto_1: "",
+  auto_2: "",
+
   role: "",
 
   isAuthLoading: true,

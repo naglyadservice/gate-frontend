@@ -1,4 +1,4 @@
-import { Clock, LogOut, MessageSquarePlus, Settings, Users } from "lucide-react";
+import { Clock, LogOut, MessageSquarePlus, Settings, UserRoundPen, Users } from "lucide-react";
 
 import { useAuth } from "../state/auth";
 import { useDrawer } from "../state/drawer";
@@ -19,7 +19,7 @@ function Header() {
     toggleDrawer();
   }
 
-  const isAdmin = role === "ADMIN";
+  const isAdmin = (role === "ADMIN");
 
   return (
     <div className='pt-6 pb-3 relative'>
@@ -53,16 +53,20 @@ function Header() {
                   <span className="text-black/50">{email}</span>
                 </div>
                 <hr />
+                <button className="flex items-center w-full gap-2 hover:opacity-70" onClick={() => onButtonTabClick("personal")}>
+                  <UserRoundPen size={20} />
+                  <span>Налаштування</span>
+                </button>
+                <button className="flex items-center w-full gap-2 hover:opacity-70" onClick={() => onButtonTabClick("history")}>
+                  <Clock size={20} />
+                  <span>Історія</span>
+                </button>
                 {isAdmin && (
                   <button className="flex items-center w-full gap-2 hover:opacity-70" onClick={() => onButtonTabClick("requests")}>
                     <MessageSquarePlus size={20} />
                     <span>Запити</span>
                   </button>
                 )}
-                <button className="flex items-center w-full gap-2 hover:opacity-70" onClick={() => onButtonTabClick("history")}>
-                  <Clock size={20} />
-                  <span>Історія</span>
-                </button>
                 {isAdmin && (
                   <button className="flex items-center w-full gap-2 hover:opacity-70" onClick={() => onButtonTabClick("users")}>
                     <Users size={20} />

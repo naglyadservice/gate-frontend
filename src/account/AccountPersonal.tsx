@@ -16,17 +16,18 @@ function AccountPersonal() {
   const auth = useAuth();
   const setTabs = useAccountTab(selector => selector.setTab);
   const [name, setName] = React.useState(auth.name || "");
-  const [apartment_number, setApartmentNumber] = React.useState(auth.apartment_number || "");
   const [phone_number, setPhoneNumber] = React.useState(auth.phone_number || "");
+  const [apartment_number, setApartmentNumber] = React.useState(auth.apartment_number || "");
   const [auto_1, setAuto1] = React.useState(auth.auto_1 || "");
   const [auto_2, setAuto2] = React.useState(auth.auto_2 || "");
 
-
   const onSaveButtonClick = () => {
     apiClient.patch(`/users/me`, {
-      name, apartment_number,
-      auto_1, auto_2,
-      phone_number,
+      name: name.trim() || null,
+      phone_number: phone_number.trim() || null,
+      apartment_number: apartment_number || null,
+      auto_1: auto_1.trim() || null,
+      auto_2: auto_2.trim() || null,
     })
       .then(() => toast.success("Зміни збережено"))
       .then(() => auth.getAuthMe())

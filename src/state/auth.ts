@@ -8,6 +8,7 @@ interface IAuth {
   email: string;
   name: string;
   image_url: string;
+  role: "" | "USER" | "ADMIN" | "SUPERADMIN";
 }
 
 interface IAuthFetching {
@@ -23,6 +24,7 @@ const useAuth = create<IAuth & IAuthFetching>((set) => ({
   name: "",
   email: "",
   image_url: "",
+  role: "",
 
   isAuthLoading: true,
   isAuthError: false,

@@ -11,13 +11,15 @@ import { tabsType, useAccountTab } from "../state/account.tabs";
 
 function Header() {
   const { isDrawer, toggleDrawer } = useDrawer();
-  const { name, email, image_url, logout } = useAuth();
+  const { name, email, image_url, logout, role } = useAuth();
   const setAccountTab = useAccountTab(selector => selector.setTab);
 
   const onButtonTabClick = (tab: tabsType) => {
     setAccountTab(tab);
     toggleDrawer();
   }
+
+  const isAdmin = role === "ADMIN";
 
   return (
     <div className='pt-6 pb-3 relative'>
@@ -51,22 +53,28 @@ function Header() {
                   <span className="text-black/50">{email}</span>
                 </div>
                 <hr />
-                <button className="flex items-center w-full gap-2 hover:opacity-70" onClick={() => onButtonTabClick("requests")}>
-                  <MessageSquarePlus size={20} />
-                  <span>Запити</span>
-                </button>
+                {isAdmin && (
+                  <button className="flex items-center w-full gap-2 hover:opacity-70" onClick={() => onButtonTabClick("requests")}>
+                    <MessageSquarePlus size={20} />
+                    <span>Запити</span>
+                  </button>
+                )}
                 <button className="flex items-center w-full gap-2 hover:opacity-70" onClick={() => onButtonTabClick("history")}>
                   <Clock size={20} />
                   <span>Історія</span>
                 </button>
-                <button className="flex items-center w-full gap-2 hover:opacity-70" onClick={() => onButtonTabClick("users")}>
-                  <Users size={20} />
-                  <span>Список користувачів</span>
-                </button>
-                <button className="flex items-center w-full gap-2 hover:opacity-70" onClick={() => onButtonTabClick("settings")}>
-                  <Settings size={20} />
-                  <span>Налаштування</span>
-                </button>
+                {isAdmin && (
+                  <button className="flex items-center w-full gap-2 hover:opacity-70" onClick={() => onButtonTabClick("users")}>
+                    <Users size={20} />
+                    <span>Список користувачів</span>
+                  </button>
+                )}
+                {isAdmin && (
+                  <button className="flex items-center w-full gap-2 hover:opacity-70" onClick={() => onButtonTabClick("settings")}>
+                    <Settings size={20} />
+                    <span>Локації</span>
+                  </button>
+                )}
                 <hr />
                 <button onClick={logout} className="flex items-center w-full gap-2 hover:opacity-70">
                   <LogOut size={20} />

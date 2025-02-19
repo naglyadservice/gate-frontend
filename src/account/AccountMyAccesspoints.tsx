@@ -28,7 +28,7 @@ function MyAccesspointsList() {
     <ul className="flex flex-col gap-4 sm:gap-5">
       {isLoading && <SmallSpinner />}
 
-      {!isLoading && myGates.length === 0 && <span>No gates</span>}
+      {!isLoading && myGates.length === 0 && <span>Точка проїзду відсутні</span>}
 
       {!isLoading && myGates.length > 0 && myGates.map(el => (
         <GateItem

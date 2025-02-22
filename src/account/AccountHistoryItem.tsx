@@ -42,15 +42,19 @@ function AccountHistoryItem(props: Partial<IProps>) {
               <span>Номер авто</span>
               <span className='font-semibold'>{props.user?.auto_1 || "—"}</span>
               <span className='font-semibold'>{props.user?.auto_2 || "—"}</span>
-            </div>
-            <div className="flex flex-col gap-3 flex-1">
+
               <span>Номер телефону</span>
               <span className='font-semibold'>{props.user?.phone_number || "—"}</span>
             </div>
 
             {/* <div className="flex flex-col gap-3 flex-1">
-              <img src={"/history.jpg"} alt="" className='aspect-video' />
+              <span>Номер телефону</span>
+              <span className='font-semibold'>{props.user?.phone_number || "—"}</span>
             </div> */}
+
+            <div className="flex-1">
+              <img src={"/history.jpg"} alt="" className='aspect-video w-full' />
+            </div>
           </div>
         )}
       </div>

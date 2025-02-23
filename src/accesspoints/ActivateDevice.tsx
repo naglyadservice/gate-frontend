@@ -38,7 +38,8 @@ function ActivateDevice() {
   }, [pathname])
 
   const onModalClose = () => {
-    setIsModal(false)
+    setIsModal(false);
+    window.location.assign("/");
   }
 
   if (isModal) {

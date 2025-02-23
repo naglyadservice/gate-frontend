@@ -48,7 +48,6 @@ const useAuth = create<IAuth & IAuthFetching>((set) => ({
       const { data } = await apiClient.get<IAuth>(`/users/me`);
 
       set(data);
-      console.log(data);
     } catch (error) {
       set({ isAuthError: true });
     } finally {

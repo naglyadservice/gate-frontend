@@ -1,19 +1,24 @@
 import React from 'react'
 import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
-import { useLocation } from 'react-router'
-import { AlertCircle, CheckCircle, X } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router'
+import { AlertCircle, CheckCircle, TriangleAlert, X } from 'lucide-react';
 
 import apiClient from '../utils/client';
+import { useAccountTab } from '../state/account.tabs';
+
 import MyInput from '../components/MyInput';
 import Button from '../components/Button';
 
 
 
 function ActivateDevice() {
+  const navigate = useNavigate();
   const { pathname, search } = useLocation();
+  const setTabs = useAccountTab(selector => selector.setTab);
+
   const [isModal, setIsModal] = React.useState<boolean | string>(false);
-  const [isSuccess, setIsSucess] = React.useState(true);
+  const [status, setStatus] = React.useState<"pending" | "success" | "error">("pending");
   const [name, setName] = React.useState("");
 
   const params = new URLSearchParams(search);
@@ -23,17 +28,17 @@ function ActivateDevice() {
     if (pathname !== "/activate-device") return;
 
     if (token) {
-      setIsModal("Введіть назву");
-      setIsSucess(true)
+      setStatus("pending");
+      setIsModal("Введіть зручну для вас назву контроллеру");
     } else {
+      setStatus("error");
       setIsModal("Токен відстутній");
-      setIsSucess(false);
     }
   }, [pathname])
 
   const onModalClose = () => {
+    navigate("/");
     setIsModal(false);
-    window.location.assign("/");
   }
 
   const onSendToken = async () => {
@@ -42,11 +47,19 @@ function ActivateDevice() {
       const id = res.data.accesspoint_id;
 
       await apiClient.patch(`/users/me/accesspoints/owned/${id}`, { label: name });
-      onModalClose();
+
+      setStatus("success");
+      setIsModal("Токен успішно активовано");
+
+      setTimeout(() => {
+        navigate("/");
+        setTabs("settings");
+        setIsModal(false);
+      }, 2000)
     } catch (err) {
       const error = err as unknown as AxiosError<{ detail: string }>;
       const msg = error.response?.data?.detail || "Помилка під час запиту";
-      setIsSucess(false);
+      setStatus("error");
       setIsModal(msg);
       toast.error(msg);
     }
@@ -66,17 +79,18 @@ function ActivateDevice() {
 
         <div className="flex flex-col gap-4 items-center text-center animate-fadeIn">
           <div className="rounded-full bg-green-100 p-3">
-            {isSuccess
-              ? (<CheckCircle size={48} className="text-green-500" />)
-              : (<AlertCircle size={48} className="text-red-500" />)}
+            {status === "pending" && (<TriangleAlert size={48} className='text-yellow-500' />)}
+            {status === "success" && (<CheckCircle size={48} className="text-green-500" />)}
+            {status === "error" && (<AlertCircle size={48} className="text-red-500" />)}
           </div>
           <h3 className="text-xl font-semibold">
             {isModal}
           </h3>
-          {isSuccess && (<>
-            <MyInput value={name} onChange={(e) => setName(e.target.value)} />
-            <Button myColorScheme='filled' className='w-full' onClick={onSendToken}>Відправити</Button>
-          </>)}
+          {status === "pending" &&
+            (<>
+              <MyInput value={name} onChange={(e) => setName(e.target.value)} />
+              <Button myColorScheme='filled' className='w-full' onClick={onSendToken}>АКТИВУВАТИ</Button>
+            </>)}
         </div>
       </div>
     </div>

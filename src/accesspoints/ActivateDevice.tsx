@@ -5,6 +5,8 @@ import { useLocation } from 'react-router'
 import { AlertCircle, CheckCircle, X } from 'lucide-react';
 
 import apiClient from '../utils/client';
+import MyInput from '../components/MyInput';
+import Button from '../components/Button';
 
 
 
@@ -12,6 +14,8 @@ function ActivateDevice() {
   const { pathname, search } = useLocation();
   const [isModal, setIsModal] = React.useState<boolean | string>(false);
   const [isSuccess, setIsSucess] = React.useState(true);
+  const [accesspointId, setAccesspointId] = React.useState("");
+  const [name, setName] = React.useState("");
 
   React.useEffect(() => {
     if (pathname !== "/activate-device") return;
@@ -20,9 +24,10 @@ function ActivateDevice() {
 
     if (token) {
       apiClient.post(`/users/me/devices/activate`, { token })
-        .then(() => {
+        .then((res) => {
           setIsSucess(true);
-          setIsModal("Токен активовано");
+          setAccesspointId(res.data.acсesspoint_id);
+          setIsModal("Токен активовано, введіть назву");
           toast.success("Токен активовано");
         }).catch((err) => {
           setIsSucess(true);
@@ -42,6 +47,13 @@ function ActivateDevice() {
     window.location.assign("/");
   }
 
+  const onRenameClick = () => {
+    apiClient.patch(`/users/me/accesspoints/owned/${accesspointId}`,
+      { label: name })
+      .then(onModalClose)
+      .catch(() => toast.error("Помилка під час запиту"))
+  }
+
   if (isModal) {
     return <div className='fixed bottom-0 top-0 left-0 right-0 z-50 bg-black bg-opacity-50 overflow-auto shadow-lg'>
       <div className='min-h-[100vh] w-full py-10 px-3 flex flex-col justify-center items-center '>
@@ -53,15 +65,19 @@ function ActivateDevice() {
             <X size={24} />
           </button>
 
-          <div className="flex flex-col items-center text-center animate-fadeIn">
-            <div className="mb-4 rounded-full bg-green-100 p-3">
+          <div className="flex flex-col gap-2 items-center text-center animate-fadeIn">
+            <div className="mb-2 rounded-full bg-green-100 p-3">
               {isSuccess
                 ? (<CheckCircle size={48} className="text-green-500" />)
                 : (<AlertCircle size={48} className="text-red-500" />)}
             </div>
-            <h3 className="text-xl font-semibold mb-2">
+            <h3 className="text-xl font-semibold">
               {isModal}
             </h3>
+            {isSuccess && accesspointId && (<>
+              <MyInput value={name} onChange={(e) => setName(e.target.value)} />
+              <Button myColorScheme='filled' onClick={onRenameClick}>Відправити</Button>
+            </>)}
           </div>
         </div>
       </div>

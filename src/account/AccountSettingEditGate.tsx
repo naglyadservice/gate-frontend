@@ -44,7 +44,7 @@ function AccountSettingsEditGate() {
             <MyInput value={name} onChange={(e) => setName(e.target.value)} />
           </div>
           <div className='flex flex-col gap-2'>
-            <span className='text-sm'>Адреса</span>
+            <span className='text-sm'>Controller ID</span>
             <MyInput value={address} onChange={(e) => setAddress(e.target.value)} />
           </div>
         </div>

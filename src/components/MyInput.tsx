@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import cn from 'classnames';
 
 interface IProps {
   value: string;
@@ -13,7 +14,10 @@ interface IProps {
 function MyInput({ value, onChange, placeholder, type = "text", readonly }: IProps) {
   return (
     <input
-      className='block w-full p-3 border border-[#AFAFB1] rounded-lg text-sm'
+      className={cn(
+        'block w-full p-3 border border-[#AFAFB1] rounded-lg text-sm',
+        (readonly && 'outline-none')
+      )}
       type={type}
       value={value}
       onChange={onChange}

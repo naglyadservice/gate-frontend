@@ -40,7 +40,7 @@ function LocationItem({ address, label, id, isEditing }: IProps) {
       </div>
 
       {isEditing && (
-        <button className="ml-auto hover:opacity-60" onClick={onEditClick}>
+        <button className="ml-auto flex-shrink-0 p-2 rounded-md border-2 border-[#596BFF] hover:opacity-60" onClick={onEditClick}>
           <Pencil color="#596BFF" />
         </button>
       )}

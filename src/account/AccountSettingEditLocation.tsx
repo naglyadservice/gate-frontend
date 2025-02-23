@@ -20,8 +20,10 @@ function AccountSettingsEditLocation() {
   const [access_code] = React.useState(currentLocation?.access_code || '');
 
   const onSaveButtonClick = () => {
+    const { access_code, ...rest } = currentLocation;
+
     apiClient.patch(`/users/me/locations/${currentLocation.id}`, {
-      ...currentLocation,
+      ...rest,
       name: name,
       address: address
     }).then((res) => {

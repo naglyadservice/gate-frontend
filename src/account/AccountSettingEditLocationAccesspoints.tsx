@@ -29,8 +29,10 @@ function AccountSettingsEditLocationAccesspoints() {
   const onSaveButtonClick = () => {
     if (!currentLocation?.id) return;
 
+    const { access_code, ...rest } = currentLocation;
+
     apiClient.patch(`/users/me/locations/${currentLocation.id}`, {
-      ...currentLocation,
+      ...rest,
       accesspoint_ids: selectedIds,
     }).then((res) => {
       if (res.status != 204) return toast.error("Помилка під час відправлення");

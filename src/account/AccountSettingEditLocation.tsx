@@ -41,6 +41,15 @@ function AccountSettingsEditLocation() {
     setTabs("settings/location/accesspoint");
   }
 
+  const onDeleteClick = () => {
+    apiClient.delete(`/users/me/locations/${currentLocation.id}`)
+      .then(() => {
+        setTabs("settings");
+        toast.success('Локацію видалено');
+      })
+      .catch(() => { toast.error("Помилка під час відправлення") })
+  }
+
   return (
     <div >
       <div className='flex flex-col gap-4'>
@@ -67,8 +76,9 @@ function AccountSettingsEditLocation() {
           </div>
         </div>
 
-        <div className='flex justify-center'>
+        <div className='flex justify-between gap-5'>
           <Button myColorScheme='filled' onClick={onSaveButtonClick}>Зберегти зміни</Button>
+          <Button myColorScheme='blocked' onClick={onDeleteClick}>Видалити локацію</Button>
         </div>
 
         <div className="flex items-center gap-2">
@@ -91,8 +101,8 @@ function AccountSettingsEditLocation() {
         <div className='flex justify-center'>
           <Button myColorScheme='filled' onClick={onEditAccessPointClick}>Редагувати</Button>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   )
 }
 

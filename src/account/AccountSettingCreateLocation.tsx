@@ -23,7 +23,7 @@ function AccountSettingsCreateLocation() {
       accesspoint_ids: []
     }).then(res => {
       if (res.status === 200) {
-        setTabs("settings/location");
+        setTabs("settings");
         return toast.success("Запит відправлено");
       }
       toast.error("Помилка під час відправлення");

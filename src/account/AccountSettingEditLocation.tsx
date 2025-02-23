@@ -17,14 +17,13 @@ function AccountSettingsEditLocation() {
   const currentLocation = useAccountSettings(selector => selector.currentLocation);
   const [name, setName] = React.useState(currentLocation?.name || '');
   const [address, setAddress] = React.useState(currentLocation?.address || '');
-  const [access_code, setCode] = React.useState(currentLocation?.access_code || '');
+  const [access_code] = React.useState(currentLocation?.access_code || '');
 
   const onSaveButtonClick = () => {
     apiClient.patch(`/users/me/locations/${currentLocation.id}`, {
       ...currentLocation,
       name: name,
-      address: address,
-      access_code: access_code
+      address: address
     }).then((res) => {
       if (res.status != 204) return toast.error("Помилка під час відправлення");
       setTabs("settings");
@@ -70,7 +69,7 @@ function AccountSettingsEditLocation() {
           <div className='flex flex-col gap-2'>
             <span className='text-sm'>Код доступу</span>
             <div className='relative'>
-              <MyInput value={access_code} onChange={(e) => setCode(e.target.value)} />
+              <MyInput value={access_code} onChange={() => { }} readonly={true} />
               <Copy size={18} onClick={onCopyButtonClick} className='absolute top-[50%] right-3 -translate-y-[50%] hover:opacity-60 cursor-pointer' />
             </div>
           </div>

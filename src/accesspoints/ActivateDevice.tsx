@@ -26,7 +26,7 @@ function ActivateDevice() {
       apiClient.post(`/users/me/devices/activate`, { token })
         .then((res) => {
           setIsSucess(true);
-          setAccesspointId(res.data.acсesspoint_id);
+          setAccesspointId(res.data.accesspoint_id);
           setIsModal("Токен активовано, введіть назву");
           toast.success("Токен активовано");
         }).catch((err) => {

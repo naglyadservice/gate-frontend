@@ -13,13 +13,12 @@ function AccountSettingsCreateLocation() {
   const setTabs = useAccountTab(selector => selector.setTab);
   const [name, setName] = React.useState('');
   const [address, setAddress] = React.useState('');
-  const [access_code, setCode] = React.useState('');
 
   const onSaveButtonClick = () => {
-    if (!name.trim() || !address.trim() || !access_code.trim()) return toast.error('Не всі поля заповнені');
+    if (!name.trim() || !address.trim()) return toast.error('Не всі поля заповнені');
 
     apiClient.post("/users/me/locations", {
-      name, address, access_code,
+      name, address,
       accesspoint_ids: []
     }).then(res => {
       if (res.status === 200) {
@@ -41,12 +40,6 @@ function AccountSettingsCreateLocation() {
           <div className='flex flex-col gap-2'>
             <span className='text-sm'>Адреса</span>
             <MyInput value={address} onChange={(e) => setAddress(e.target.value.trimStart())} />
-          </div>
-          <div className='flex flex-col gap-2'>
-            <span className='text-sm'>Код доступу</span>
-            <div className='relative'>
-              <MyInput value={access_code} onChange={(e) => setCode(e.target.value.trimStart())} />
-            </div>
           </div>
         </div>
 

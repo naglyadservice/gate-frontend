@@ -2,6 +2,7 @@ interface IAccesspoint {
   id: string;
   label: string;
   address: string;
+  rtsp_url: string;
 }
 
 interface IUser {

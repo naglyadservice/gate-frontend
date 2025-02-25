@@ -36,7 +36,7 @@ function GateList() {
         }
 
         const result = incAccessPoints.reduce((accum: IAccum, item: IMyAccesspoints) => {
-          const locationId = item.location.name || item.location.address || item.location.id || "Без локації";
+          const locationId = item.location.name || item.location.id || "Без локації";
           accum[locationId] = accum[locationId] || [];
           accum[locationId].push(item);
           return accum;

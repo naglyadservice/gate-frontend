@@ -26,8 +26,8 @@ function LocationList() {
           <LocationItem
             key={el.id}
             id={el.id}
-            label={el.name}
-            address={el.address}
+            name={el.name}
+            // address={el.address}
             isEditing={tab === "settings"}
           />
         ))

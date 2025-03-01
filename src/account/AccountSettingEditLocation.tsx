@@ -17,7 +17,6 @@ function AccountSettingsEditLocation() {
   const currentLocation = useAccountSettings(selector => selector.currentLocation);
   const [name, setName] = React.useState(currentLocation?.name || '');
   const [access_code] = React.useState(currentLocation?.access_code || '');
-  // const [address, setAddress] = React.useState(currentLocation?.address || '');
 
   const onSaveButtonClick = () => {
     const { access_code, ...rest } = currentLocation;
@@ -25,7 +24,6 @@ function AccountSettingsEditLocation() {
     apiClient.patch(`/users/me/locations/${currentLocation.id}`, {
       ...rest,
       name: name,
-      // address: address
     }).then((res) => {
       if (res.status != 204) return toast.error("Помилка під час відправлення");
       setTabs("settings");
@@ -64,10 +62,6 @@ function AccountSettingsEditLocation() {
             <span className='text-sm'>Назва локації</span>
             <MyInput value={name} onChange={(e) => setName(e.target.value)} />
           </div>
-          {/* <div className='flex flex-col gap-2'>
-            <span className='text-sm'>Адреса</span>
-            <MyInput value={address} onChange={(e) => setAddress(e.target.value)} />
-          </div> */}
           <div className='flex flex-col gap-2'>
             <span className='text-sm'>Код доступу</span>
             <div className='relative'>

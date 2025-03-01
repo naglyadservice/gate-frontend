@@ -13,14 +13,13 @@ import Button from '../components/Button'
 function AccountSettingsEditGate() {
   const setTabs = useAccountTab(selector => selector.setTab);
   const currentGate = useAccountSettings(selector => selector.currentGate);
-  const [name, setName] = React.useState(currentGate?.gateFor || '');
+  const [label, setLabel] = React.useState(currentGate?.gateFor || '');
   const [address, setAddress] = React.useState(currentGate?.address || '');
 
   const onSaveButtonClick = () => {
     apiClient.patch(`/users/me/accesspoints/owned/${currentGate.id}`,
       {
-        address,
-        label: name,
+        address, label,
         rtsp_url: "rtsp_url"
       })
       .then(() => {
@@ -41,10 +40,10 @@ function AccountSettingsEditGate() {
         <div className="flex flex-col gap-3">
           <div className='flex flex-col gap-2'>
             <span className='text-sm'>Назва точки доступу</span>
-            <MyInput value={name} onChange={(e) => setName(e.target.value)} />
+            <MyInput value={label} onChange={(e) => setLabel(e.target.value)} />
           </div>
           <div className='flex flex-col gap-2'>
-            <span className='text-sm'>Controller ID</span>
+            <span className='text-sm'>Назва контролера</span>
             <MyInput value={address} onChange={(e) => setAddress(e.target.value)} />
           </div>
         </div>

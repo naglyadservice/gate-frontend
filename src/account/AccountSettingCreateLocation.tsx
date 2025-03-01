@@ -12,13 +12,13 @@ import Button from '../components/Button';
 function AccountSettingsCreateLocation() {
   const setTabs = useAccountTab(selector => selector.setTab);
   const [name, setName] = React.useState('');
-  const [address, setAddress] = React.useState('');
 
   const onSaveButtonClick = () => {
-    if (!name.trim() || !address.trim()) return toast.error('Не всі поля заповнені');
+    if (!name.trim()) return toast.error('Не всі поля заповнені');
 
     apiClient.post("/users/me/locations", {
-      name, address,
+      name,
+      address: "",
       accesspoint_ids: []
     }).then(res => {
       if (res.status === 200) {
@@ -36,10 +36,6 @@ function AccountSettingsCreateLocation() {
           <div className='flex flex-col gap-2'>
             <span className='text-sm'>Назва локації</span>
             <MyInput value={name} onChange={(e) => setName(e.target.value.trimStart())} />
-          </div>
-          <div className='flex flex-col gap-2'>
-            <span className='text-sm'>Адреса</span>
-            <MyInput value={address} onChange={(e) => setAddress(e.target.value.trimStart())} />
           </div>
         </div>
 

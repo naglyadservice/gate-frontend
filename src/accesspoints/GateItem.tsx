@@ -52,7 +52,7 @@ function GateItem({ gateFor, address, id, isEditing }: IProps) {
 
       <div className="flex flex-col text-sm sm:text-base">
         <span className='font-medium text-[#5977ff] uppercase'>{gateFor || id}</span>
-        <span className='font-semibold'>{address || ""}</span>
+        {/* <span className='font-semibold'>{address || ""}</span> */}
       </div>
 
       {!isEditing && (

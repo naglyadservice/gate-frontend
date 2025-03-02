@@ -14,12 +14,13 @@ function AccountSettingsEditGate() {
   const setTabs = useAccountTab(selector => selector.setTab);
   const currentGate = useAccountSettings(selector => selector.currentGate);
   const [label, setLabel] = React.useState(currentGate?.gateFor || '');
-  const [address, setAddress] = React.useState(currentGate?.address || '');
+  // const [address, setAddress] = React.useState(currentGate?.address || '');
 
   const onSaveButtonClick = () => {
     apiClient.patch(`/users/me/accesspoints/owned/${currentGate.id}`,
       {
-        address, label,
+        label,
+        address: "",
         rtsp_url: "rtsp_url"
       })
       .then(() => {
@@ -42,10 +43,10 @@ function AccountSettingsEditGate() {
             <span className='text-sm'>Назва точки доступу</span>
             <MyInput value={label} onChange={(e) => setLabel(e.target.value)} />
           </div>
-          <div className='flex flex-col gap-2'>
+          {/* <div className='flex flex-col gap-2'>
             <span className='text-sm'>Назва контролера</span>
             <MyInput value={address} onChange={(e) => setAddress(e.target.value)} />
-          </div>
+          </div> */}
         </div>
 
         <div className='flex justify-center'>

@@ -63,7 +63,7 @@ function AccountSettingsEditLocationAccesspoints() {
 
           {myGates.length > 0 && myGates.map(accesspoint => (
             <li className='px-1 py-3 flex items-center' key={accesspoint.id}>
-              <span>{accesspoint.address || accesspoint.label || accesspoint.id}</span>
+              <span>{accesspoint.label || accesspoint.id}</span>
               <Checkbox
                 className='ml-auto'
                 checked={selectedIds.includes(accesspoint.id)}
@@ -71,11 +71,6 @@ function AccountSettingsEditLocationAccesspoints() {
               />
             </li>
           ))}
-
-          {/* <li className='px-1 py-3 flex items-center'>
-            <span>Тестовая</span>
-            <Checkbox className='ml-auto' />
-          </li> */}
         </ul>
 
         <div className='flex justify-center'>

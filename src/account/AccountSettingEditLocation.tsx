@@ -89,7 +89,7 @@ function AccountSettingsEditLocation() {
               <li
                 key={el.id}
                 className='px-1 py-3'
-              >{el.address || el.label || el.id}</li>
+              >{el.label || el.id}</li>
             ))}
         </ul>
 

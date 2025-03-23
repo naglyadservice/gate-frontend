@@ -1,11 +1,13 @@
-import { Clock, LogOut, MessageSquarePlus, Settings, UserRoundPen, Users } from "lucide-react";
+import React from "react";
+import { CircleX, Clock, Loader, LogOut, MapPin, MessageSquarePlus, Send, UserRoundPen, Users } from "lucide-react";
 
+import apiClient from "../utils/client";
 import { useAuth } from "../state/auth";
 import { useDrawer } from "../state/drawer";
-
-import logo from "../assets/logo.svg";
-import personalArea from "../assets/personal-area.svg";
 import { tabsType, useAccountTab } from "../state/account.tabs";
+
+import logo from "../assets/logo-gate-blue.svg";
+import personalArea from "../assets/personal-area.svg";
 
 
 
@@ -13,10 +15,20 @@ function Header() {
   const { isDrawer, toggleDrawer } = useDrawer();
   const { name, email, image_url, logout, role } = useAuth();
   const setAccountTab = useAccountTab(selector => selector.setTab);
+  const [isTelegramStatus, setIsTelegramStatus] = React.useState<"" | "loading" | "error">("");
 
   const onButtonTabClick = (tab: tabsType) => {
     setAccountTab(tab);
     toggleDrawer();
+  }
+
+  const onTelegramClick = () => {
+    setIsTelegramStatus("loading");
+    apiClient.get("/users/telegram/register")
+      .then((res) => window.location.assign(res.data))
+      .then(() => setIsTelegramStatus(""))
+      .catch(() => setIsTelegramStatus("error"))
+      .finally(() => window.setTimeout(() => setIsTelegramStatus(""), 5000));
   }
 
   const isAdmin = (role === "ADMIN");
@@ -30,7 +42,7 @@ function Header() {
           rel="noopener noreferrer"
           className="hover:opacity-70"
         >
-          <img src={logo} alt="logo" className="w-20 sm:w-28 " />
+          <img src={logo} alt="logo" className="w-32 sm:w-36 " />
         </a>
 
         <div>
@@ -39,7 +51,6 @@ function Header() {
             src={image_url}
             alt=""
             onClick={toggleDrawer}
-
             onError={(e) => e.currentTarget.src = personalArea}
           />
         </div>
@@ -75,11 +86,23 @@ function Header() {
                 )}
                 {isAdmin && (
                   <button className="flex items-center w-full gap-2 hover:opacity-70" onClick={() => onButtonTabClick("settings")}>
-                    <Settings size={20} />
+                    <MapPin size={20} />
                     <span>Локації</span>
                   </button>
                 )}
+                <button
+                  onClick={onTelegramClick}
+                  disabled={isTelegramStatus === "loading"}
+                  className="flex items-center w-full gap-2 hover:opacity-70"
+                >
+                  {(isTelegramStatus === "") && (<Send size={20} />)}
+                  {(isTelegramStatus === "error") && (<CircleX size={20} />)}
+                  {(isTelegramStatus === "loading") && (<Loader size={20} className="animate-spin" />)}
+                  <span>Телеграм-бот</span>
+                </button>
+
                 <hr />
+
                 <button onClick={logout} className="flex items-center w-full gap-2 hover:opacity-70">
                   <LogOut size={20} />
                   <span>Вихід</span>

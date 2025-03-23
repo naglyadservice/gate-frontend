@@ -69,7 +69,7 @@ function AccountPersonal() {
           </div>
 
           <div className='flex flex-col gap-2'>
-            <span className='text-sm'>Номер квартиры</span>
+            <span className='text-sm'>Номер квартири</span>
             <MyInput value={apartment_number} onChange={(e) => setApartmentNumber(e.target.value)} type='number' />
           </div>
 
